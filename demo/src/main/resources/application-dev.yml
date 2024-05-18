@@ -1,0 +1,25 @@
+spring:
+    application:
+        name: dev
+    datasource:
+        hive: #hive数据源
+            url: jdbc:hive2://219.228.173.114:10000/stiei_rgzn
+            type: com.alibaba.druid.pool.DruidDataSource
+            username: root
+            password:
+            driver-class-name: org.apache.hive.jdbc.HiveDriver
+        common-config: #连接池统一配置，应用到所有的数据源
+            initialSize: 1
+            minIdle: 1
+            maxIdle: 5
+            maxActive: 50
+            maxWait: 10000
+            timeBetweenEvictionRunsMillis: 10000
+            minEvictableIdleTimeMillis: 300000
+            validationQuery: select 'x'
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            poolPreparedStatements: true
+            maxOpenPreparedStatements: 20
+            filters: stat
