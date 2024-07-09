@@ -28,13 +28,7 @@ public class HiveController {
     @Resource
     HdfsService hdfsService;
 
-    @GetMapping(value = "/stiei")
-    public ResponseEntity getTs(){
-        ResponseEntity responseEntity = new ResponseEntity("{stiei_rgzn}",HttpStatus.OK);
-        return responseEntity;
-    }
-
-    @GetMapping(value = "/find")
+    @GetMapping(value = "/find")  // 此接口用于查看hive的rgzn库中有多少表
     public ResponseEntity getFind(HttpServletRequest request){
         String tableName = request.getParameter("tableName");
         List<String> strings = hiveService.selectFromTable(tableName);
@@ -50,10 +44,20 @@ public class HiveController {
     }
 
 
-    @PostMapping("/upload")
+    @PostMapping("/upload") // 此接口用于上传csv文件
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, URISyntaxException, InterruptedException {
+        String filename = file.getOriginalFilename();
+        String lastThreeChars = null;
+        if (filename != null) {
+            lastThreeChars = filename.substring(filename.length()-3);
+        }
+
+        if (!lastThreeChars.equals("csv")){
+            return ResponseEntity.ok("选择csv上传文件");
+        }
+
         // 假设HDFS的URI和配置已经设置好了
-        String hdfsPath = "hdfs://219.228.173.114:9000/stiei/";
+        String hdfsPath = "hdfs://192.168.96.129:9000/stiei/text/csv";
         // 使用Hadoop API将文件写入HDFS
         // ... 写入HDFS的代码 ...
         System.out.println(file.getOriginalFilename());
@@ -70,7 +74,7 @@ public class HiveController {
     }
 
 
-    @GetMapping(value = "/list") // 该接口可以查看stiei_rgzn库下的所有表名
+    @GetMapping(value = "/list") // 该接口可以查看rgzn库下的所有表名
     public ResponseEntity listAllTables(){
         List<String> s = hiveService.listAllTables();
         ResponseEntity responseEntity = new ResponseEntity(s,HttpStatus.OK);

@@ -36,7 +36,7 @@ public class HiveServiceImpl implements HiveService {
     }
 
     @Override
-    public String loadInfoTable(){
+    public String loadInfoTable(){  // 没用
         String filePath = "/root/value/student.txt";
         String sql ="load data local inpath '"+ filePath +"' into table studentNew";
         String result = "load data into table studentNew" ;
@@ -51,7 +51,7 @@ public class HiveServiceImpl implements HiveService {
     }
 
     @Override
-    public String createTable(){
+    public String createTable(){    // 没用
         StringBuffer sql = new StringBuffer();
         sql.append("CREATE TABLE IF NOT EXISTS ");
         sql.append(" studentNew ");
@@ -75,7 +75,7 @@ public class HiveServiceImpl implements HiveService {
 
 
     @Override
-    public List<String> listAllTables() {
+    public List<String> listAllTables() {  // 展示所有的表
         List<String> result = new ArrayList<>();
         try {
             Statement statement = hiveDruidDataSource.getConnection().createStatement();
@@ -123,7 +123,7 @@ public class HiveServiceImpl implements HiveService {
         try {
             Statement statement = hiveDruidDataSource.getConnection().createStatement();
             String sql = "select * from " + tableName; //set hive.cli.print.header=true;
-            log.info("Running" + sql);
+            log.info("Running " + sql);
             ResultSet resultSet = statement.executeQuery(sql);
             int columnCount = resultSet.getMetaData().getColumnCount();
 

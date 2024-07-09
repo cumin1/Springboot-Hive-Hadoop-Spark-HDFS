@@ -27,11 +27,11 @@
     </property>
     <property>
         <name>hive.server2.thrift.bind.host</name>
-        <value>bigdata1</value>
+        <value>master</value>
     </property>
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://bigdata1:9083</value>
+        <value>thrift://master:9083</value>
     </property>
     <property>
         <name>hive.metastore.event.db.notification.api.auth</name>

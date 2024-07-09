@@ -3,7 +3,7 @@ spring:
         name: dev
     datasource:
         hive: #hive数据源
-            url: jdbc:hive2://219.228.173.114:10000/stiei_rgzn
+            url: jdbc:hive2://192.168.96.129:10000/rgzn
             type: com.alibaba.druid.pool.DruidDataSource
             username: root
             password:
