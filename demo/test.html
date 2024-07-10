@@ -6,7 +6,10 @@
 </head>
 <body>
 <input type="file" id="csvFile">
-<button onclick="uploadFile()">Upload</button>
+<button onclick="uploadFile()">Upload csv</button>
+<br>
+<input type="file" id="image">
+<button onclick="uploadImage()">Upload image</button>
 
 <script>
     function uploadFile() {
@@ -17,6 +20,23 @@
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://localhost:8080/hive/upload', true);
+        xhr.send(formData);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+    }
+
+    function uploadImage() {
+        const fileInput = document.getElementById('image');
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8080/stiei/file/uploadImage', true);
         xhr.send(formData);
 
         xhr.onreadystatechange = function() {

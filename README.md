@@ -18,11 +18,11 @@ hdfs://bigdata1:9000/stiei/text/txt/
 需要实现的接口：
 (统一以json格式返回)
 
-查看hdfs下所有的文件(GET)：
-* /hdfs/file/findImage
-* /hdfs/file/findCsv
-* /hdfs/file/findTxt
-* /hdfs/file/findVideo
+查看hdfs下所有的文件(GET) 结果会返回一个列表，展示所有文件：
+* /hdfs/file/findImage(已实现)
+* /hdfs/file/findCsv(已实现)
+* /hdfs/file/findTxt(已实现)
+* /hdfs/file/findVideo(已实现)
 
 上传文件至hdfs(POST)； 
 * /hdfs/file/uploadImage
