@@ -1,4 +1,4 @@
-*.java linguist-language=java
-*.md linguist-language=java
-*.scala linguist-language=java
-*.xml linguist-language=java
+*.java linguist-language=Java
+*.md linguist-language=Java
+*.scala linguist-language=Java
+*.xml linguist-language=Java
