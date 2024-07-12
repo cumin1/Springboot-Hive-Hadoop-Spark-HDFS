@@ -194,30 +194,48 @@ public class HdfsServiceImpl implements HdfsService {
         Configuration configuration = new Configuration();
         FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
 
-        Path imagePath = new Path("hdfs://192.168.96.129:9000/stiei/image/" + image_name);
-        fs.delete(imagePath, true); // 删除指定路径的图片
+        Path imagePath = new Path("hdfs://192.168.96.129:8020/stiei/image/" + image_name);
+        boolean isDelete = fs.delete(imagePath, true); // 删除指定路径的图片
         fs.close();
 
-        return "delete image success";
+        if (!isDelete) {
+            // 如果isDeleted为false，则文件或目录不存在
+            return "没有该文件，请重新输入";
+        } else {
+            // 文件已成功删除
+            return "文件已成功删除";
+        }
     }
 
     @Override
     public String delete_csv(String csv_name) throws URISyntaxException, IOException {
         Configuration configuration = new Configuration();
         FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
-        Path csvPath = new Path("hdfs://192.168.96.129:9000/stiei/text/csv/" + csv_name);
-        fs.delete(csvPath, true); // 删除指定路径的csv文件
+        Path csvPath = new Path("hdfs://192.168.96.129:8020/stiei/text/csv/" + csv_name);
+        boolean isDelete = fs.delete(csvPath, true); // 删除指定路径的csv文件
         fs.close();
-        return "delete csv success";
+        if (!isDelete) {
+            // 如果isDeleted为false，则文件或目录不存在
+            return "没有该文件，请重新输入";
+        } else {
+            // 文件已成功删除
+            return "文件已成功删除";
+        }
     }
 
     @Override
     public String delete_txt(String txt_name) throws URISyntaxException, IOException {
         Configuration configuration = new Configuration();
         FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
-        Path txtPath = new Path("hdfs://192.168.96.129:9000/stiei/text/txt/" + txt_name);
-        fs.delete(txtPath, true); // 删除指定路径的txt文件
+        Path txtPath = new Path("hdfs://192.168.96.129:8020/stiei/text/txt/" + txt_name);
+        boolean isDelete = fs.delete(txtPath, true); // 删除指定路径的txt文件
         fs.close();
-        return "delete txt success";
+        if (!isDelete) {
+            // 如果isDeleted为false，则文件或目录不存在
+            return "没有该文件，请重新输入";
+        } else {
+            // 文件已成功删除
+            return "文件已成功删除";
+        }
     }
 }

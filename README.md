@@ -25,10 +25,10 @@ hdfs://bigdata1:9000/stiei/text/txt/
 * /hdfs/file/findVideo(已实现)
 
 上传文件至hdfs(POST)； 
-* /hdfs/file/uploadImage
-* /hdfs/file/uploadCsv
-* /hdfs/file/uploadTxt
-* /hdfs/file/uploadVideo
+* /hdfs/file/uploadImage(已实现)
+* /hdfs/file/uploadCsv(已实现)
+* /hdfs/file/uploadTxt(已实现)
+* /hdfs/file/uploadVideo(已实现)
 
 删除文件(POST)： 
 * /hdfs/file/deleteImage

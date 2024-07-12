@@ -22,10 +22,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/hdfs/file")
 public class HdfsController {
-    String imagePath = "hdfs://192.168.96.129:9000/stiei/image/";
-    String csvPath = "hdfs://192.168.96.129:9000/stiei/text/csv/";
-    String txtPath = "hdfs://192.168.96.129:9000/stiei/text/txt";
-    String videoPath = "hdfs://192.168.96.129:9000/stiei/video";
+    String imagePath = "hdfs://192.168.96.129:8020/stiei/image/";
+    String csvPath = "hdfs://192.168.96.129:8020/stiei/text/csv/";
+    String txtPath = "hdfs://192.168.96.129:8020/stiei/text/txt/";
+    String videoPath = "hdfs://192.168.96.129:8020/stiei/video/";
 
     @Resource
     HdfsService hdfsService;
@@ -78,7 +78,7 @@ public class HdfsController {
     public ResponseEntity uploadImage(@RequestParam("file") MultipartFile file)
             throws IOException, URISyntaxException, InterruptedException {
         /*
-        todo 该接口实现上传图片至hdfs中的功能，还没测过
+        该接口实现上传图片至hdfs中的功能，测试好了
          */
         String filename = file.getOriginalFilename();
 
@@ -99,7 +99,7 @@ public class HdfsController {
     public ResponseEntity uploadCsv(@RequestParam("file") MultipartFile file)
             throws IOException, URISyntaxException, InterruptedException {
         /*
-        todo 该接口实现上传csv至hdfs中的功能，还没测过
+        该接口实现上传csv至hdfs中的功能，测试好了
          */
         String filename = file.getOriginalFilename();
 
@@ -119,7 +119,7 @@ public class HdfsController {
     public ResponseEntity uploadTxt(@RequestParam("file") MultipartFile file)
             throws IOException, URISyntaxException, InterruptedException {
         /*
-        todo 该接口实现上传txt至hdfs中的功能，还没测过
+        该接口实现上传txt至hdfs中的功能，测试好了
          */
         String filename = file.getOriginalFilename();
 
@@ -154,7 +154,7 @@ public class HdfsController {
             throws URISyntaxException, IOException
     {
         /*
-        todo 此接口用于删除指定图片 还没测过
+        此接口用于删除指定图片 测试好了
          */
 
         String image_name = request.getParameter("image_name");
@@ -170,7 +170,7 @@ public class HdfsController {
             throws URISyntaxException, IOException
     {
         /*
-        todo 此接口用于删除指定csv文件 还没测过
+        此接口用于删除指定csv文件 测试好了
          */
 
         String csv_name = request.getParameter("csv_name");
@@ -184,7 +184,7 @@ public class HdfsController {
         throws URISyntaxException, IOException
     {
         /*
-        todo 此接口用于删除指定txt文件 还没测过
+        此接口用于删除指定txt文件 测试好了
          */
 
         String txt_name = request.getParameter("txt_name");
