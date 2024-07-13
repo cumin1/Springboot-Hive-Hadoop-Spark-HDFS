@@ -1,4 +1,4 @@
-package com.hive.demo.spark_utils
+package com.hive.demo.utils
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession

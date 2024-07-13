@@ -1,21 +1,20 @@
 package com.hive.demo.controller;
 
 import com.hive.demo.service.HdfsService;
-import com.hive.demo.service.HiveService;
-import com.hive.demo.spark_utils.SparkCommon;
 
 //import org.apache.tools.ant.taskdefs.condition.Http;
+import com.hive.demo.utils.HdfsUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -191,6 +190,41 @@ public class HdfsController {
         String message = hdfsService.delete_txt(txt_name);
 
         return ResponseEntity.ok(message);
+    }
+
+    private static final String BASE_DIR = "/stiei";
+    @RequestMapping(value = "/getFile/{filename}", method = RequestMethod.GET)
+    @ResponseBody
+    public String fileDownload(@PathVariable("filename") String fileName, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.setContentType("application/octet-stream; charset=utf-8");
+            response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+
+            if (fileName.contains("jpg") || fileName.contains("png")) {
+                String path = BASE_DIR + "/image/" + fileName;
+                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
+                return "upload image success";
+            }else if (fileName.contains("csv")) {
+                String path = BASE_DIR + "/text/csv/" + fileName;
+                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
+                return "upload csv success";
+            }else if (fileName.contains("txt")) {
+                String path = BASE_DIR + "/text/txt/" + fileName;
+                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
+                return "upload txt success";
+            }else if (fileName.contains("mp4") || fileName.contains("avi")) {
+                String path = BASE_DIR + "/video/" + fileName;
+                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
+                return "upload video success";
+            }else {
+                return "file not found";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "error";
     }
 
 }

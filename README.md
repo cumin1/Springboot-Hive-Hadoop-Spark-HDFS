@@ -31,9 +31,9 @@ hdfs://bigdata1:9000/stiei/text/txt/
 * /hdfs/file/uploadVideo(已实现)
 
 删除文件(POST)： 
-* /hdfs/file/deleteImage
-* /hdfs/file/deleteCsv
-* /hdfs/file/deleteTxt
-* /hdfs/file/deleteVideo
+* /hdfs/file/deleteImage(已实现)
+* /hdfs/file/deleteCsv(已实现)
+* /hdfs/file/deleteTxt(已实现)
+* /hdfs/file/deleteVideo(已实现)
 
-* 将文件导出(POST)： /hdfs/file/loadCsv
+* 下载文件(Get)： /hdfs/file/getFile/{filename}

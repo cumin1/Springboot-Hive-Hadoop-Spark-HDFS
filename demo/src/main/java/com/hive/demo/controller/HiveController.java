@@ -2,15 +2,13 @@ package com.hive.demo.controller;
 
 import com.hive.demo.service.HdfsService;
 import com.hive.demo.service.HiveService;
-import com.hive.demo.spark_utils.SparkCommon;
+import com.hive.demo.utils.SparkCommon;
 
 //import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
