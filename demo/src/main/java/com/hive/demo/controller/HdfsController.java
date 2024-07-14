@@ -4,6 +4,7 @@ import com.hive.demo.service.HdfsService;
 
 //import org.apache.tools.ant.taskdefs.condition.Http;
 import com.hive.demo.utils.HdfsUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +22,23 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/hdfs/file")
 public class HdfsController {
-    String imagePath = "hdfs://192.168.96.129:8020/stiei/image/";
-    String csvPath = "hdfs://192.168.96.129:8020/stiei/text/csv/";
-    String txtPath = "hdfs://192.168.96.129:8020/stiei/text/txt/";
-    String videoPath = "hdfs://192.168.96.129:8020/stiei/video/";
+    @Value("${hdfsPath.image}")
+    String imagePath;
+
+    @Value("${hdfsPath.csv}")
+    String csvPath;
+
+    @Value("${hdfsPath.txt}")
+    String txtPath;
+
+    @Value("${hdfsPath.video}")
+    String videoPath;
 
     @Resource
     HdfsService hdfsService;
 
     @GetMapping(value = "/findImage")
-    public ResponseEntity findImage() throws IOException, URISyntaxException {
+    public ResponseEntity findImage() throws IOException, URISyntaxException, InterruptedException {
         /*
         此接口实现查找hdfs目录：/stiei/image/ 下所有的图片
          */
@@ -41,7 +49,7 @@ public class HdfsController {
     }
 
     @GetMapping(value = "/findCsv")
-    public ResponseEntity findCsv() throws IOException, URISyntaxException {
+    public ResponseEntity findCsv() throws IOException, URISyntaxException, InterruptedException {
         /*
          此接口用于查找hdfs目录：/stiei/text/csv/ 下所有的csv文件
          */
@@ -52,7 +60,7 @@ public class HdfsController {
     }
 
     @GetMapping(value = "/findTxt")
-    public ResponseEntity findTxt() throws IOException, URISyntaxException {
+    public ResponseEntity findTxt() throws IOException, URISyntaxException, InterruptedException {
         /*
         此接口用于查找hdfs目录：/stiei/text/txt/ 下所有的txt文件
          */
@@ -63,7 +71,7 @@ public class HdfsController {
     }
 
     @GetMapping(value = "/findVideo")
-    public ResponseEntity findVideo() throws IOException, URISyntaxException {
+    public ResponseEntity findVideo() throws IOException, URISyntaxException, InterruptedException {
         /*
         此接口用于查找hdfs目录：/stiei/video/ 下所有的视频
          */
@@ -150,8 +158,7 @@ public class HdfsController {
 
     @PostMapping("/deleteImage")
     public ResponseEntity deleteImage(HttpServletRequest request)
-            throws URISyntaxException, IOException
-    {
+            throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定图片 测试好了
          */
@@ -166,8 +173,7 @@ public class HdfsController {
 
     @PostMapping("/deleteCsv")
     public ResponseEntity deleteCsv(HttpServletRequest request)
-            throws URISyntaxException, IOException
-    {
+            throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定csv文件 测试好了
          */
@@ -180,8 +186,7 @@ public class HdfsController {
 
     @PostMapping("/deleteTxt")
     public ResponseEntity deleteTxt(HttpServletRequest request)
-        throws URISyntaxException, IOException
-    {
+            throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定txt文件 测试好了
          */

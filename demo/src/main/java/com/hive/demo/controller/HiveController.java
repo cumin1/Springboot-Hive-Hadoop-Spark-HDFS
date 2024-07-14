@@ -2,7 +2,7 @@ package com.hive.demo.controller;
 
 import com.hive.demo.service.HdfsService;
 import com.hive.demo.service.HiveService;
-import com.hive.demo.utils.SparkCommon;
+//import com.hive.demo.utils.SparkCommon;
 
 //import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.http.HttpStatus;
@@ -55,7 +55,7 @@ public class HiveController {
         }
 
         // 假设HDFS的URI和配置已经设置好了
-        String hdfsPath = "hdfs://192.168.96.129:9000/stiei/text/csv";
+        String hdfsPath = "hdfs://192.168.114.128:9000/stiei/text/csv";
         // 使用Hadoop API将文件写入HDFS
         // ... 写入HDFS的代码 ...
         System.out.println(file.getOriginalFilename());
@@ -64,8 +64,8 @@ public class HiveController {
 
         // 调用Spark程序将CSV导入Hive
         // ... 调用Spark程序的代码（可能是一个外部脚本或Java API）...
-        SparkCommon sparkCommon = new SparkCommon();
-        sparkCommon.load_data_hive(file.getOriginalFilename());
+//        SparkCommon sparkCommon = new SparkCommon();
+//        sparkCommon.load_data_hive(file.getOriginalFilename());
 
 
         return ResponseEntity.ok("File uploaded successfully and imported to Hive");

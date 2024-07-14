@@ -5,6 +5,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.security.UserGroupInformation;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,14 +21,15 @@ import java.util.List;
 @Service
 public class HdfsServiceImpl implements HdfsService {
 
-    private static String HDFS_URI = "hdfs://192.168.96.129:8020";
+    @Value("${hdfsPath.uri}")
+    String HDFS_URI;
 
 
     @Override
     public String upload_to_hdfs(String hdfsPath, MultipartFile file) throws IOException, URISyntaxException, InterruptedException {
         //1.获取文件系统
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         FSDataOutputStream fos = fs.create(new Path("/stiei/video/" + file.getOriginalFilename()));
 
@@ -44,10 +46,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public List find_csv_hdfs() throws IOException, URISyntaxException {
+    public List find_csv_hdfs() throws IOException, URISyntaxException, InterruptedException {
         Configuration configuration = new Configuration();
 
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         Path path = new Path("/stiei/text/csv");
         RemoteIterator<LocatedFileStatus> files = fs.listFiles(path, true);
@@ -63,10 +65,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public List find_image_hdfs() throws IOException, URISyntaxException {
+    public List find_image_hdfs() throws IOException, URISyntaxException, InterruptedException {
         Configuration configuration = new Configuration();
 
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         Path path = new Path("/stiei/image");
         RemoteIterator<LocatedFileStatus> files = fs.listFiles(path, true);
@@ -83,10 +85,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public List find_txt_hdfs() throws IOException, URISyntaxException {
+    public List find_txt_hdfs() throws IOException, URISyntaxException, InterruptedException {
         Configuration configuration = new Configuration();
 
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         Path path = new Path("/stiei/text/txt");
         RemoteIterator<LocatedFileStatus> files = fs.listFiles(path, true);
@@ -102,9 +104,9 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public List find_video_hdfs() throws IOException, URISyntaxException {
+    public List find_video_hdfs() throws IOException, URISyntaxException, InterruptedException {
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
         Path path = new Path("/stiei/video");
         RemoteIterator<LocatedFileStatus> files = fs.listFiles(path, true);
 
@@ -119,10 +121,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String upload_image(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException {
+    public String upload_image(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
         // 传过来一个路劲 和 图片文件
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         byte[] fileContext = file.getBytes();
 
@@ -136,10 +138,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String upload_csv(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException {
+    public String upload_csv(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
         // 传过来一个路径 和 图片文件
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         byte[] fileContext = file.getBytes();
 
@@ -153,10 +155,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String upload_txt(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException {
+    public String upload_txt(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
         // 传过来一个路径 和 图片文件
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
 
         byte[] fileContext = file.getBytes();
 
@@ -170,12 +172,12 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String upload_video(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException {
+    public String upload_video(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
         /*
          * 传过来一个路径 和 视频文件
          */
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
 
         byte[] fileContext = file.getBytes();
 
@@ -190,11 +192,11 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String delete_image(String image_name) throws URISyntaxException, IOException {
+    public String delete_image(String image_name) throws URISyntaxException, IOException, InterruptedException {
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
 
-        Path imagePath = new Path("hdfs://192.168.96.129:8020/stiei/image/" + image_name);
+        Path imagePath = new Path(HDFS_URI + "/stiei/image/" + image_name);
         boolean isDelete = fs.delete(imagePath, true); // 删除指定路径的图片
         fs.close();
 
@@ -208,10 +210,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String delete_csv(String csv_name) throws URISyntaxException, IOException {
+    public String delete_csv(String csv_name) throws URISyntaxException, IOException, InterruptedException {
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
-        Path csvPath = new Path("hdfs://192.168.96.129:8020/stiei/text/csv/" + csv_name);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+        Path csvPath = new Path(HDFS_URI + "/stiei/text/csv/" + csv_name);
         boolean isDelete = fs.delete(csvPath, true); // 删除指定路径的csv文件
         fs.close();
         if (!isDelete) {
@@ -224,10 +226,10 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
-    public String delete_txt(String txt_name) throws URISyntaxException, IOException {
+    public String delete_txt(String txt_name) throws URISyntaxException, IOException, InterruptedException {
         Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration);
-        Path txtPath = new Path("hdfs://192.168.96.129:8020/stiei/text/txt/" + txt_name);
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+        Path txtPath = new Path(HDFS_URI + "/stiei/text/txt/" + txt_name);
         boolean isDelete = fs.delete(txtPath, true); // 删除指定路径的txt文件
         fs.close();
         if (!isDelete) {

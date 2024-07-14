@@ -36,4 +36,4 @@ hdfs://bigdata1:9000/stiei/text/txt/
 * /hdfs/file/deleteTxt(已实现)
 * /hdfs/file/deleteVideo(已实现)
 
-* 下载文件(Get)： /hdfs/file/getFile/{filename}
+下载文件(Get)： /hdfs/file/getFile/{filename}
