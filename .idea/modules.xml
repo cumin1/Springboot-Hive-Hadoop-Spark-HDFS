@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/demo_front.iml" filepath="$PROJECT_DIR$/demo_front.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/springboot-hive-master.iml" filepath="$PROJECT_DIR$/.idea/springboot-hive-master.iml" />
     </modules>
   </component>
