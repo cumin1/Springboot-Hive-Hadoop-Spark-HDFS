@@ -2,3 +2,4 @@
 *.md linguist-language=Java
 *.scala linguist-language=Java
 *.xml linguist-language=Java
+*.js linguist-language=Java
