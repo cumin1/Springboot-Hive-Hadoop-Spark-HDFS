@@ -3,12 +3,14 @@ package com.hive.demo.service.impl;
 import com.hive.demo.service.HdfsService;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.security.UserGroupInformation;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import java.io.*;
 import java.net.URI;
 
@@ -240,4 +242,105 @@ public class HdfsServiceImpl implements HdfsService {
             return "文件已成功删除";
         }
     }
+
+    @Override
+    public String delete_video(String video_name) throws URISyntaxException, IOException, InterruptedException {
+        Configuration configuration = new Configuration();
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+        Path videoPath = new Path(HDFS_URI + "/stiei/video/" + video_name);
+        boolean isDelete = fs.delete(videoPath, true);
+        fs.close();
+        if (!isDelete) {
+            // 如果isDeleted为false，则文件或目录不存在
+            return "没有该文件，请重新输入";
+        }  else {
+            // 文件已成功删除
+            return "文件已成功删除";
+        }
+    }
+
+    @Override
+    public String load_image(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException
+    {
+        try {
+
+            Configuration configuration = new Configuration();
+            FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+            Path imagePath = new Path(path);
+            FSDataInputStream fsInput = fs.open(imagePath);
+
+            IOUtils.copyBytes(fsInput, outputStream, 4096, false);
+            fsInput.close();
+            outputStream.flush();
+
+            return "文件下载成功";
+
+        }catch (Exception e){
+            return "文件下载错误";
+        }
+
+
+    }
+
+    @Override
+    public String load_csv(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
+        try {
+
+            Configuration configuration = new Configuration();
+            FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+            Path csvPath = new Path(path);
+            FSDataInputStream fsInput = fs.open(csvPath);
+
+            IOUtils.copyBytes(fsInput, outputStream, 4096, false);
+            fsInput.close();
+            outputStream.flush();
+
+            return "文件下载成功";
+
+        }catch (Exception e){
+            return "文件下载错误";
+        }
+    }
+
+    @Override
+    public String load_txt(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
+        try {
+
+            Configuration configuration = new Configuration();
+            FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+            Path txtPath = new Path(path);
+            FSDataInputStream fsInput = fs.open(txtPath);
+
+            IOUtils.copyBytes(fsInput, outputStream, 4096, false);
+            fsInput.close();
+            outputStream.flush();
+
+            return "文件下载成功";
+
+        }catch (Exception e){
+            return "文件下载错误";
+        }
+    }
+
+    @Override
+    public String load_video(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
+        try {
+
+            Configuration configuration = new Configuration();
+            FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+            Path videoPath = new Path(path);
+            FSDataInputStream fsInput = fs.open(videoPath);
+
+            IOUtils.copyBytes(fsInput, outputStream, 4096, false);
+            fsInput.close();
+            outputStream.flush();
+
+            return "文件下载成功";
+
+        }catch (Exception e){
+            return "文件下载错误";
+        }
+    }
+
+
 }

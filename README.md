@@ -7,13 +7,13 @@ csv存两份：
 
 存储的地方：
 
-图像：hdfs://bigdata1:9000/stiei/image/
+图像：hdfs://bigdata1:8020/stiei/image/
 
-文本：hdfs://bigdata1:9000/stiei/text/csv/
+文本：hdfs://bigdata1:8020/stiei/text/csv/
 
-hdfs://bigdata1:9000/stiei/text/txt/
+hdfs://bigdata1:9000/8020/text/txt/
 
-视频：hdfs://bigdata1:9000/stiei/video/
+视频：hdfs://bigdata1:8020/stiei/video/
 
 需要实现的接口：
 (统一以json格式返回)
@@ -30,10 +30,10 @@ hdfs://bigdata1:9000/stiei/text/txt/
 * /hdfs/file/uploadTxt(已实现)
 * /hdfs/file/uploadVideo(已实现)
 
-删除文件(POST)： 
-* /hdfs/file/deleteImage(已实现)
-* /hdfs/file/deleteCsv(已实现)
-* /hdfs/file/deleteTxt(已实现)
-* /hdfs/file/deleteVideo(已实现)
+删除文件(GET)： 
+* /hdfs/file/deleteImage/{image_name}(已实现)
+* /hdfs/file/deleteCsv/{csv_name}(已实现)
+* /hdfs/file/deleteTxt/{txt_name}(已实现)
+* /hdfs/file/deleteVideo{video_name}(已实现)
 
 下载文件(Get)： /hdfs/file/getFile/{filename}

@@ -156,14 +156,13 @@ public class HdfsController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/deleteImage")
-    public ResponseEntity deleteImage(HttpServletRequest request)
+    @GetMapping("/deleteImage/{image_name}")
+    public ResponseEntity deleteImage(@PathVariable(value = "image_name") String image_name,HttpServletRequest request)
             throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定图片 测试好了
          */
 
-        String image_name = request.getParameter("image_name");
         // 删除对应图片文件
         String message = hdfsService.delete_image(image_name);
 
@@ -171,56 +170,68 @@ public class HdfsController {
     }
 
 
-    @PostMapping("/deleteCsv")
-    public ResponseEntity deleteCsv(HttpServletRequest request)
+    @GetMapping("/deleteCsv/{csv_name}")
+    public ResponseEntity deleteCsv(@PathVariable(value = "csv_name") String csv_name,HttpServletRequest request)
             throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定csv文件 测试好了
          */
 
-        String csv_name = request.getParameter("csv_name");
         String message = hdfsService.delete_csv(csv_name);
 
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/deleteTxt")
-    public ResponseEntity deleteTxt(HttpServletRequest request)
+    @GetMapping("/deleteTxt/{txt_name}")
+    public ResponseEntity deleteTxt(@PathVariable(value = "txt_name") String txt_name,HttpServletRequest request)
             throws URISyntaxException, IOException, InterruptedException {
         /*
         此接口用于删除指定txt文件 测试好了
          */
 
-        String txt_name = request.getParameter("txt_name");
         String message = hdfsService.delete_txt(txt_name);
 
         return ResponseEntity.ok(message);
     }
 
-    private static final String BASE_DIR = "/stiei";
-    @RequestMapping(value = "/getFile/{filename}", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/deletVideo/{video_name}")
+    public ResponseEntity deleteVideo(@PathVariable(value = "video_name") String video_name,HttpServletRequest request)
+        throws URISyntaxException, IOException, InterruptedException {
+        String message = hdfsService.delete_video(video_name);
+        return ResponseEntity.ok(message);
+    }
+
+    @Value("${hdfsPath.uri}")
+    String BASE_DIR;
+    @GetMapping("/getFile/{filename}")
     public String fileDownload(@PathVariable("filename") String fileName, HttpServletRequest request, HttpServletResponse response) {
         try {
             response.setContentType("application/octet-stream; charset=utf-8");
             response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
 
             if (fileName.contains("jpg") || fileName.contains("png")) {
-                String path = BASE_DIR + "/image/" + fileName;
-                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
-                return "upload image success";
+                String path = BASE_DIR + "/stiei/image/" + fileName;
+                String message = hdfsService.load_image(path,response.getOutputStream());
+
+                return message;
             }else if (fileName.contains("csv")) {
-                String path = BASE_DIR + "/text/csv/" + fileName;
-                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
-                return "upload csv success";
+                String path = BASE_DIR + "/stiei/text/csv/" + fileName;
+
+                String message = hdfsService.load_csv(path,response.getOutputStream());
+
+                return message;
             }else if (fileName.contains("txt")) {
-                String path = BASE_DIR + "/text/txt/" + fileName;
-                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
-                return "upload txt success";
+                String path = BASE_DIR + "/stiei/text/txt/" + fileName;
+
+                String message = hdfsService.load_txt(path,response.getOutputStream());
+
+                return message;
             }else if (fileName.contains("mp4") || fileName.contains("avi")) {
-                String path = BASE_DIR + "/video/" + fileName;
-                HdfsUtils.copyFileAsStream(path, response.getOutputStream());
-                return "upload video success";
+                String path = BASE_DIR + "/stiei/video/" + fileName;
+
+                String message = hdfsService.load_video(path,response.getOutputStream());
+
+                return message;
             }else {
                 return "file not found";
             }
@@ -231,6 +242,9 @@ public class HdfsController {
 
         return "error";
     }
+
+
+
 
 }
 

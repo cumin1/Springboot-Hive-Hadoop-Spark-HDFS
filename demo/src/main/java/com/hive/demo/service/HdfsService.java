@@ -2,6 +2,7 @@ package com.hive.demo.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -31,4 +32,15 @@ public interface HdfsService {
     String delete_csv(String csv_name) throws URISyntaxException, IOException, InterruptedException;
 
     String delete_txt(String txt_name) throws URISyntaxException, IOException, InterruptedException;
+
+    String delete_video(String video_name) throws URISyntaxException, IOException, InterruptedException;
+
+    String load_image(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
+
+    String load_csv(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
+
+    String load_txt(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
+
+    String load_video(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
+
 }

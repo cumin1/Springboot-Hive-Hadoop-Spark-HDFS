@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hadoop.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,11 +14,14 @@ import java.net.URL;
 
 public class HdfsUtils {
     private static FileSystem hdfs = null;
+
+    @Value("${hdfsPath.uri}")
+    static String hdfsPath;
     static {
         URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory());
         Configuration conf=new Configuration();
         try {
-            hdfs = FileSystem.get(URI.create("hdfs://192.168.96.129:8020"), conf, "root");
+            hdfs = FileSystem.get(URI.create(hdfsPath), conf, "root");
         } catch (Exception e) {
             e.printStackTrace();
         }
