@@ -194,7 +194,7 @@ public class HdfsController {
         return ResponseEntity.ok(message);
     }
 
-    @GetMapping("/deletVideo/{video_name}")
+    @GetMapping("/deleteVideo/{video_name}")
     public ResponseEntity deleteVideo(@PathVariable(value = "video_name") String video_name,HttpServletRequest request)
         throws URISyntaxException, IOException, InterruptedException {
         String message = hdfsService.delete_video(video_name);

@@ -2,8 +2,8 @@
   <div class="box">
     <h1>video list</h1>
     <ul class="file-list">
-      <li v-for="video in videos" :key="video" @click="handleClick(video)">
-        {{ video }}
+      <li class="list-item" v-for="video in videos" :key="video" @click="handleClick(video)">
+        {{ video }} <button class="delete-btn" :data-image-name="image" @click.stop="handleDelete(video)">Delete</button>
       </li>
     </ul>
   </div>
@@ -83,7 +83,26 @@ export default {
       handleClick,
     }
 
+  },
+
+  methods: {
+    fresh_page(){
+      location.reload();
+    },
+    handleDelete(video) {
+      console.log(`点击了删除按钮: ${video}`);
+
+      // 删除文件
+      axios.get('http://localhost:8080/hdfs/file/deleteVideo/' + video)
+          .then(response => {
+        console.log('/a', response.data)
+      })
+      this.fresh_page();
+
+    }
   }
+
+
 }
 </script>
 
@@ -106,4 +125,42 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* 样式化按钮 */
+.delete-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007BFF; /* 蓝色背景 */
+  border: none;
+  border-radius: 4px; /* 圆角 */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 过渡效果 */
+
+  float: right;
+}
+
+.delete-btn:hover {
+  background-color: #0056b3; /* 鼠标悬停时改变背景色 */
+}
+
+.delete-btn:active {
+  background-color: #004085; /* 鼠标点击时改变背景色 */
+}
+
+.list-item {
+  /* 给 li 标签添加一个类名，以便我们可以定位其中的按钮 */
+  position: relative; /* 这将允许内部的绝对定位元素基于 li 进行定位 */
+  /* 其他样式... */
+}
+
+.delete-btn {
+  position: absolute; /* 这将使按钮相对于最近的已定位父元素（在这里是 .list-item）进行定位 */
+  top: -2px; /* 向上移动 3px */
+  right: -100px; /* 向右移动 100px */
+  /* 其他样式，如背景、边框、字体大小等... */
+}
+
+
 </style>

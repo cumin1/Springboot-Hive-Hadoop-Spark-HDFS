@@ -26,8 +26,14 @@ spring:
     mvc:
     servlet:
         multipart:
-            max-file-size: 10MB  		# 设置单个文件最大大小为10MB
-            max-request-size: 100MB  	# 设置多个文件大小为100MB
+            max-file-size: 50MB  		# 设置单个文件最大大小为10MB
+            max-request-size: 50MB  	# 设置多个文件大小为100MB
+
+server:
+    tomcat:
+        connection-timeout: 5000
+        disable-upload-timeout: false
+    connectionUploadTimeout: 5000
 
 hdfsPath:
     uri: hdfs://192.168.114.128:8020

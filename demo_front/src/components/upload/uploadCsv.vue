@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>上传csv</h1>
-    <input type="file" @change="handleCsvUpload" />
-    <button @click="submitCsv">上传</button>
+    <input  type="file" @change="handleCsvUpload" />
+    <button class="upload-button" @click="submitCsv">上传</button>
   </div>
 </template>
 
@@ -55,4 +55,23 @@ export default {
 
 <style>
 
+.upload-button {
+  /* 样式化上传按钮 */
+  padding: 8px 16px;
+  background-color: #4CAF50; /* 绿色背景 */
+  border: none;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* 平滑过渡效果 */
+}
+
+.upload-button:hover {
+  background-color: #45a049; /* 鼠标悬停时改变颜色 */
+}
 </style>
