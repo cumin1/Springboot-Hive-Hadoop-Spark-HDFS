@@ -1,7 +1,8 @@
 package com.hive.demo.controller;
 
+import com.hive.demo.entity.ResultBean;
 import com.hive.demo.service.HdfsService;
-
+import org.springframework.http.MediaType;
 //import org.apache.tools.ant.taskdefs.condition.Http;
 import com.hive.demo.utils.HdfsUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,14 +38,17 @@ public class HdfsController {
     @Resource
     HdfsService hdfsService;
 
-    @GetMapping(value = "/findImage")
+    @GetMapping(value = "/findImage",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity findImage() throws IOException, URISyntaxException, InterruptedException {
         /*
         此接口实现查找hdfs目录：/stiei/image/ 下所有的图片
          */
         List list = hdfsService.find_image_hdfs();
 
-        ResponseEntity responseEntity = new ResponseEntity(list,HttpStatus.OK);
+        ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
+
+        ResponseEntity responseEntity = new ResponseEntity(response,HttpStatus.OK);
+
         return responseEntity;
     }
 
@@ -55,7 +59,9 @@ public class HdfsController {
          */
         List list = hdfsService.find_csv_hdfs();
 
-        ResponseEntity responseEntity = new ResponseEntity(list,HttpStatus.OK);
+        ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
+        ResponseEntity responseEntity = new ResponseEntity(response,HttpStatus.OK);
+
         return responseEntity;
     }
 
@@ -66,7 +72,9 @@ public class HdfsController {
          */
         List list = hdfsService.find_txt_hdfs();
 
-        ResponseEntity responseEntity = new ResponseEntity(list,HttpStatus.OK);
+        ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
+
+        ResponseEntity responseEntity = new ResponseEntity(response,HttpStatus.OK);
         return responseEntity;
     }
 
@@ -77,7 +85,9 @@ public class HdfsController {
          */
         List list = hdfsService.find_video_hdfs();
 
-        ResponseEntity responseEntity = new ResponseEntity(list,HttpStatus.OK);
+        ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
+
+        ResponseEntity responseEntity = new ResponseEntity(response,HttpStatus.OK);
         return responseEntity;
     }
 
@@ -91,15 +101,19 @@ public class HdfsController {
 
         String file_tail = filename.substring(filename.length() - 3);
         if (!(file_tail.equals("jpg") || file_tail.equals("png"))) {
-            return ResponseEntity.badRequest().body("请上传jpg或png格式的图片");
+            return ResponseEntity.ok(new ResultBean(409,"请上传jpg或png格式的图片",null));
+        }
+
+        // 检查imageList中是否已存在filename
+        List imageList = hdfsService.find_image_hdfs();
+        if (imageList.contains(filename)) {
+            return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
         }
 
         String hdfsPath = imagePath + filename;
-
         // 使用Hadoop API将文件写入HDFS
         String message = hdfsService.upload_image(hdfsPath,file);
-
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @PostMapping("/uploadCsv")
@@ -112,14 +126,19 @@ public class HdfsController {
 
         String file_tail = filename.substring(filename.length() - 3);
         if (!(file_tail.equals("csv"))) {
-            return ResponseEntity.badRequest().body("请上传csv格式的文件");
+            return ResponseEntity.ok(new ResultBean(409,"请上传csv格式的文件",null));
+        }
+
+        // 检查imageList中是否已存在filename
+        List csvList = hdfsService.find_csv_hdfs();
+        if (csvList.contains(filename)) {
+            return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
         }
 
         String filePath = csvPath + filename;
-
         String message = hdfsService.upload_csv(filePath,file);
 
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @PostMapping("/uploadTxt")
@@ -132,11 +151,18 @@ public class HdfsController {
 
         String file_tail = filename.substring(filename.length() - 3);
         if (!file_tail.equals("txt")) {
-            return ResponseEntity.badRequest().body("请上传txt格式的文件");
+            return ResponseEntity.ok(new ResultBean(409,"请上传txt格式的文件",null));
         }
+
+        // 检查imageList中是否已存在filename
+        List txtList = hdfsService.find_txt_hdfs();
+        if (txtList.contains(filename)) {
+            return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
+        }
+
         String filePath = txtPath + filename;
         String message = hdfsService.upload_txt(filePath,file);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @PostMapping("/uploadVideo")
@@ -148,12 +174,18 @@ public class HdfsController {
         String filename = file.getOriginalFilename();
         String file_tail = filename.substring(filename.length() - 3);
         if (!(file_tail.equals("mp4") || file_tail.equals("avi"))) {
-            return ResponseEntity.badRequest().body("请上传mp4或avi格式的视频");
+            return ResponseEntity.ok(new ResultBean(409,"请上传mp4或avi格式的视频",null));
+        }
+
+        // 检查imageList中是否已存在filename
+        List videoList = hdfsService.find_video_hdfs();
+        if (videoList.contains(filename)) {
+            return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
         }
 
         String filePath = videoPath + filename;
         String message = hdfsService.upload_video(filePath,file);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @GetMapping("/deleteImage/{image_name}")
@@ -165,10 +197,8 @@ public class HdfsController {
 
         // 删除对应图片文件
         String message = hdfsService.delete_image(image_name);
-
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
-
 
     @GetMapping("/deleteCsv/{csv_name}")
     public ResponseEntity deleteCsv(@PathVariable(value = "csv_name") String csv_name,HttpServletRequest request)
@@ -179,7 +209,7 @@ public class HdfsController {
 
         String message = hdfsService.delete_csv(csv_name);
 
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @GetMapping("/deleteTxt/{txt_name}")
@@ -191,14 +221,14 @@ public class HdfsController {
 
         String message = hdfsService.delete_txt(txt_name);
 
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @GetMapping("/deleteVideo/{video_name}")
     public ResponseEntity deleteVideo(@PathVariable(value = "video_name") String video_name,HttpServletRequest request)
         throws URISyntaxException, IOException, InterruptedException {
         String message = hdfsService.delete_video(video_name);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
     @Value("${hdfsPath.uri}")
@@ -212,25 +242,18 @@ public class HdfsController {
             if (fileName.contains("jpg") || fileName.contains("png")) {
                 String path = BASE_DIR + "/stiei/image/" + fileName;
                 String message = hdfsService.load_image(path,response.getOutputStream());
-
                 return message;
             }else if (fileName.contains("csv")) {
                 String path = BASE_DIR + "/stiei/text/csv/" + fileName;
-
                 String message = hdfsService.load_csv(path,response.getOutputStream());
-
                 return message;
             }else if (fileName.contains("txt")) {
                 String path = BASE_DIR + "/stiei/text/txt/" + fileName;
-
                 String message = hdfsService.load_txt(path,response.getOutputStream());
-
                 return message;
             }else if (fileName.contains("mp4") || fileName.contains("avi")) {
                 String path = BASE_DIR + "/stiei/video/" + fileName;
-
                 String message = hdfsService.load_video(path,response.getOutputStream());
-
                 return message;
             }else {
                 return "file not found";

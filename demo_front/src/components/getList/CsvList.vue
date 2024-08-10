@@ -28,7 +28,7 @@ export default {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json(); // 假设服务器返回的是JSON格式的数据
-        csvs.value = data; // 更新文件列表
+        csvs.value = data.data; // 更新文件列表
 
       } catch (error) {
         console.error('There was a problem with your fetch operation:', error);

@@ -26,7 +26,6 @@ public class HdfsServiceImpl implements HdfsService {
     @Value("${hdfsPath.uri}")
     String HDFS_URI;
 
-
     @Override
     public String upload_to_hdfs(String hdfsPath, MultipartFile file) throws IOException, URISyntaxException, InterruptedException {
         //1.获取文件系统
@@ -263,18 +262,14 @@ public class HdfsServiceImpl implements HdfsService {
     public String load_image(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException
     {
         try {
-
             Configuration configuration = new Configuration();
             FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
             Path imagePath = new Path(path);
             FSDataInputStream fsInput = fs.open(imagePath);
-
             IOUtils.copyBytes(fsInput, outputStream, 4096, false);
             fsInput.close();
             outputStream.flush();
-
             return "文件下载成功";
-
         }catch (Exception e){
             return "文件下载错误";
         }
@@ -285,18 +280,14 @@ public class HdfsServiceImpl implements HdfsService {
     @Override
     public String load_csv(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
         try {
-
             Configuration configuration = new Configuration();
             FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
             Path csvPath = new Path(path);
             FSDataInputStream fsInput = fs.open(csvPath);
-
             IOUtils.copyBytes(fsInput, outputStream, 4096, false);
             fsInput.close();
             outputStream.flush();
-
             return "文件下载成功";
-
         }catch (Exception e){
             return "文件下载错误";
         }
@@ -305,18 +296,14 @@ public class HdfsServiceImpl implements HdfsService {
     @Override
     public String load_txt(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
         try {
-
             Configuration configuration = new Configuration();
             FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
             Path txtPath = new Path(path);
             FSDataInputStream fsInput = fs.open(txtPath);
-
             IOUtils.copyBytes(fsInput, outputStream, 4096, false);
             fsInput.close();
             outputStream.flush();
-
             return "文件下载成功";
-
         }catch (Exception e){
             return "文件下载错误";
         }
@@ -325,18 +312,14 @@ public class HdfsServiceImpl implements HdfsService {
     @Override
     public String load_video(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
         try {
-
             Configuration configuration = new Configuration();
             FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
             Path videoPath = new Path(path);
             FSDataInputStream fsInput = fs.open(videoPath);
-
             IOUtils.copyBytes(fsInput, outputStream, 4096, false);
             fsInput.close();
             outputStream.flush();
-
             return "文件下载成功";
-
         }catch (Exception e){
             return "文件下载错误";
         }

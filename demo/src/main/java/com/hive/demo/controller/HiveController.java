@@ -1,11 +1,13 @@
 package com.hive.demo.controller;
 
+import com.hive.demo.entity.ResultBean;
 import com.hive.demo.service.HdfsService;
 import com.hive.demo.service.HiveService;
 //import com.hive.demo.utils.SparkCommon;
 
 //import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,15 @@ public class HiveController {
 
     @Resource
     HdfsService hdfsService;
+
+    @GetMapping(value = "/hello",produces = MediaType.APPLICATION_JSON_VALUE)  // 此接口用于查看hive的rgzn库中有多少表
+    public ResponseEntity hello(HttpServletRequest request){
+        ResponseEntity responseEntity = new ResponseEntity("hello",HttpStatus.OK);
+
+        ResultBean<String> response = new ResultBean<String>(200,"success","hello");
+
+        return responseEntity.ok(response);
+    }
 
     @GetMapping(value = "/find")  // 此接口用于查看hive的rgzn库中有多少表
     public ResponseEntity getFind(HttpServletRequest request){
