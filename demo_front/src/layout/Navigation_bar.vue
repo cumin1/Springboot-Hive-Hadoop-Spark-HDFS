@@ -15,7 +15,7 @@ export default {
       <ul>
         <li><a href="/">首页</a></li>
         <li><a href="/datamanager">数据管理</a></li>
-        <li><a href="#">设置</a></li>
+        <li><a href="/python_run">Python运行窗口</a></li>
       </ul>
     </nav>
   </header>

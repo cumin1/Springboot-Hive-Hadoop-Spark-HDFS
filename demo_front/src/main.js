@@ -2,12 +2,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import Main_main_display from "@/layout/Main_main_display.vue";
 import DataManagement from "@/layout/DataManagement.vue";
+import PythonCode from "@/components/PythonCode.vue";
 
 import { createRouter, createWebHistory } from 'vue-router'; // 引入 Vue Router 的函数
 
 const routes = [
     { path: '/', component: Main_main_display },
     { path: '/datamanager', component: DataManagement },
+    { path: '/python_run', component: PythonCode },
 ];
 
 const router = createRouter({
