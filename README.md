@@ -1,21 +1,19 @@
-Hadoop平台中存储的文件有图像、文本、视频
+# 快速开始
+将项目导入到服务器中，配置相应环境，运行项目即可。
 
-图像、视频 将会存到hdfs中
-csv存两份：
-* hdfs目录下
-* hive中 hive库名：rgzn
+运行前端界面:
+```
+vue-cli-service serve
+```
 
-存储的地方：
+# 数据存储的地方
+图像：hdfs://bigdata1:9870/stiei/image/
 
-图像：hdfs://bigdata1:8020/stiei/image/
+文本：hdfs://bigdata1:9870/stiei/text/csv/
 
-文本：hdfs://bigdata1:8020/stiei/text/csv/
+hdfs://bigdata1:9000/9870/text/txt/
 
-hdfs://bigdata1:9000/8020/text/txt/
-
-视频：hdfs://bigdata1:8020/stiei/video/
-
-下载文件(Get)： /hdfs/file/getFile/{filename}
+视频：hdfs://bigdata1:9870/stiei/video/
 
 # 查看所有图片
 方法：GET
