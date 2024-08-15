@@ -169,7 +169,7 @@ public class HdfsController {
     public ResponseEntity uploadVideo(@RequestParam("file") MultipartFile file)
         throws IOException, URISyntaxException, InterruptedException {
         /*
-        todo 该接口实现上传视频至hdfs中的功能，还没测过
+        该接口实现上传视频至hdfs中的功能
          */
         String filename = file.getOriginalFilename();
         String file_tail = filename.substring(filename.length() - 3);
