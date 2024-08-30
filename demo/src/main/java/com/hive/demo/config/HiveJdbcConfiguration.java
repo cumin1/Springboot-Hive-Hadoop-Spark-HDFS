@@ -15,6 +15,5 @@ public class HiveJdbcConfiguration {
     public JdbcTemplate jdbcTemplate(@Qualifier("hiveDruidDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
-
 }
 
