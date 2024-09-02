@@ -1,0 +1,60 @@
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.image-item {
+    position: relative;
+    display: inline-block;
+    border-radius: 10px; /* 圆角效果 */
+    overflow: hidden;
+}
+
+.image-item img {
+    display: block;
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #007bff; /* 边框颜色 */
+    border-radius: 10px; /* 圆角效果 */
+}
+
+.download-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+.image-name {
+    padding: 10px;
+    font-size: 14px;
+    color: #333; /* 文件名颜色 */
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid #5d6064; /* 添加边框 */
+    transition: background-color 0.3s, border-color 0.3s; /* 动画效果 */
+}

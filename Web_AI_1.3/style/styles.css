@@ -1,0 +1,141 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    color: black;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    font-size: 30px;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* 你可以根据需要更改这个颜色 */
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 90px;
+   
+}
+
+.text-left {
+    background-color: transparent; /* 你可以将#your-color-here替换为你想要的颜色 */
+    padding: 10px;
+    margin-bottom: 10px;
+    /* height: 90px; */
+    color:white;
+    font-size: x-large;
+}
+
+.buttons {
+    display: flex;
+}
+
+.login-btn, .register-btn {
+    margin-left: 10px; /* 按钮之间的间距 */
+    background-color: #006cb8; /* 蓝色背景 */
+    border: none; /* 无边框 */
+    color: white; /* 白色文本 */
+    padding: 5px 10px; /* 内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 无下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    cursor: pointer; /* 鼠标指针变为手形 */
+}
+
+#search-section {
+    text-align: center;
+    padding: 20px;
+    background-color: transparent;
+}
+
+#search-box {
+    height: 60px; /* 高度为宽度的三倍 */
+    width: 30%; /* 宽度为屏幕宽度的十分之一 */
+    border: none; /* 无边框 */
+    outline: none; /* 无轮廓 */
+    font-size: 25px; /* 设置文本框内字体大小，包括 placeholder */
+    padding: 5px 15px; /* 设置文本框内文本与边框的距离 */
+    /* border-radius: 10px; 设置文本框的圆角 */
+    border-top-left-radius: 10px; /* 设置文本框的圆角 */
+    border-bottom-left-radius: 10px;
+    /* margin-right: 0px; */
+    /* padding-right: 50px; 为按钮留出空间 */
+}
+
+#search-btn {
+    /* display: block; */
+    height: 70px;
+    background-color: #8c1515; 
+    border: none; 
+    color: white; 
+    padding: 16px 32px; 
+    text-align: center; 
+    outline:none;
+    /*display: inline-block;  行内块元素 */
+    font-size: 20px; /* 字体大小 */
+    /* cursor: pointer;   */
+    /* border-radius: 10px; 设置文本框的圆角 */
+    border-top-right-radius: 10px; /* 设置文本框的圆角 */
+    border-bottom-right-radius: 10px;
+    /* margin-left: 0px; */
+
+}
+
+/* 图片鼠标悬停放大效果 */
+.hover-zoom {
+    transition: transform .2s; /* 动画效果 */
+}
+
+.hover-zoom:hover {
+    transform: scale(1.1); /* 放大至110% */
+}
+
+#image-links .image-container {
+    display: flex; /* 使用Flexbox布局来并列排放图片链接 */
+    flex-wrap: nowrap; /* 允许Flex项目换行 */
+    justify-content: flex-start; /* 项目之间的间隔平均分配 */
+    align-items: center;
+    /* overflow: auto; 当内容溢出时，会在水平和垂直方向上显示滚动条。*/
+  
+}
+
+#image-links .image-container a {
+    text-decoration: none; /* 移除链接的下划线 */
+    margin: 10px; /* 设置链接之间的外边距 */
+    display: inline-block; /* 使链接表现为行内块元素 */
+}
+
+#image-links .hover-zoom {
+    transition: transform 0.3s ease-in-out; /* 设置放大动画效果 */
+    /* width: 150px; 设置图片的宽度 */
+    height: auto; /* 保持图片的宽高比 */
+    width: calc(100% - 5px); /* 减去一些间隙，避免图片换行 */
+    margin: 5px; /* 图片之间的间隙 */
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+#image-links .hover-zoom:hover {
+    transform: scale(1.1); /* 鼠标悬停时放大图片 */
+}
+
+.image-container p {
+    text-align: center; /* 居中显示 */
+    font-weight: bold; /* 文字加粗 */
+    /* 可以添加其他样式来增强美观性，比如字体大小、颜色、行高等 */
+    font-size: 16px; /* 字体大小 */
+    color: #333; /* 字体颜色 */
+    line-height: 1.5; /* 行高 */
+    margin-top: 10px; /* 与图片之间的间距 */
+}
+

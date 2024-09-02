@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>特征值与特征向量计算</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/link1.css"/>
+		<script id="MathJax-script" async src="../js/es5/tex-chtml.js"></script>
+		<script>
+		MathJax = {
+		  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+		};
+		</script>
+	</head>
+	<body class="container-fluid">		
+		<h2 class="my-5 hnav">特征值与特征向量计算</h2>
+		<div id="right_nav">
+			<ul>
+				<li class="active">知识</li>
+				<li>实训</li>
+				<li>扩展</li>
+				<li class='last'>顶部</li>
+			</ul>
+		</div>
+		<h3 class="mb-3 son_wrap" id='knowledge'>一、知识</h3>
+		<p>特征值和特征向量是矩阵和矩阵应用领域重要概念和工具，在模式识别、序列预测等机器学习中得到广泛应用，可应用于降维、升维、特征选取、主成分分析、数据压缩、线性判别法等领域中发挥重要作用。</p>
+		<p>在二维平面，平面上点和向量可以看作是一回事。例如，考虑四个点：$A(1,1)、B(-1,1)、C(1,0)$和$D(-1,0)$，写成向量形式分别是$\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix}、\begin{pmatrix}
+		-1 \\
+		1 \end{pmatrix}、\begin{pmatrix}
+		1 \\
+		0 \end{pmatrix}$和$\begin{pmatrix}
+		-1 \\
+		0 \end{pmatrix}$，如图1所示。</p>
+		<div class="row mb-3">
+			<div class="col text-center">
+				<img src="img/1-3-1.png" class="img-fluid">
+				<div>图1&nbsp;&nbsp;&nbsp;&nbsp;矩阵与向量相乘改变向量方向与伸缩</div>
+			</div>
+		</div>
+		<p>我们用矩阵$M=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}$分别与四个向量相乘，得到下式$$M \cdot A=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix}=\begin{pmatrix}
+		3 \\
+		3 \end{pmatrix}=3\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix} \prec A'$$
+		$$M \cdot B=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}\begin{pmatrix}
+		-1 \\
+		1 \end{pmatrix}=\begin{pmatrix}
+		-1 \\
+		1 \end{pmatrix} \prec B'$$
+		$$M \cdot C=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}\begin{pmatrix}
+		1\\
+		0 \end{pmatrix}=\begin{pmatrix}
+		2 \\
+		1 \end{pmatrix} \prec C'$$
+		$$M \cdot D=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}\begin{pmatrix}
+		-1 \\
+		0 \end{pmatrix}=\begin{pmatrix}
+		1 \\
+		-1 \end{pmatrix} \prec D'$$</p>
+		<p>从图中可以看出，矩阵$M$与向量$A$和向量$B$相乘后得到的新向量$A'=\begin{pmatrix}
+		3\\
+		3 \end{pmatrix}、B'=\begin{pmatrix}
+		-1\\
+		1 \end{pmatrix}$，新向量$A'$和$B'$的方向与原向量$A$和$B$方向没有变化，只是向量的长度（大小）分别是原来的3倍和1倍。而与向量$C$和向量$D$相乘得到新向量$C'=\begin{pmatrix}
+		2\\
+		1 \end{pmatrix}$和$D'=\begin{pmatrix}
+		1\\
+		-1\end{pmatrix}$与原来的方向完全不同。
+		</p>
+		<p>矩阵和向量相乘是对向量进行线性变换，是对原向量同时施加方向和长度的变化，如向量$C$和向量$D$。但存在那么几个特殊的向量，被矩阵相乘后，仅有长度变化，方向不变，如向量$A$和向量$B$。我们可用下面统计形式表示：$$Mx=\lambda x$$</p>
+		<p>如$M=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}，x=\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix}，\lambda =3$。上式中的$x$为向量，$\lambda$为经矩阵变换后与原向量的伸缩比，$\lambda$称为矩阵$M$的特征值，$x$为$\lambda$对应的特征向量。</p>
+		<ol>
+			<li>
+				<h5>什么是特征值与特征向量<span class="ktitle ml-5 badge badge-light badge-pill">show more</span></h5>
+				<div class="kdetails">
+					<p class="mt-3">对$M$为$n$阶方阵，若存在实数$\lambda$及$n$维非零列向量$x$，使得$Mx=\lambda x$成立，则称$\lambda$是$M$的特征值，$x$是矩阵$M$对应于$\lambda$的特征向量。</p>
+					<p>特征值计算：求方程$det(M-\lambda E)=|M-\lambda E|=0$根$\lambda$</p>
+					<p>特征向量计算：求满足方程$(M-\lambda E)x=0$的向量$x$</p>
+					<div>例如，矩阵$M=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}$的特征值和特征向量计算步骤：</div>
+					<p>由$|M-\lambda E|=\lvert \begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}-\lambda \begin{pmatrix}
+		1 & 0 \\
+		0 & 1\end{pmatrix} \rvert=0$，推导出$(2-\lambda)^2-1=0$，得到两个特征值：$\lambda_1=1，\lambda_2=3$。</p>
+		<p>当$\lambda=1$时，$(M-\lambda E)x=0$推导出$\begin{pmatrix}
+		1 & 1 \\
+		1 & 1\end{pmatrix}\begin{pmatrix}
+		x_1 \\
+		x_2 \end{pmatrix}=0$，得到上面的$B$点向量$\begin{pmatrix}
+		-1 \\
+		1 \end{pmatrix}$；当$\lambda=3$时，$(M-\lambda E)x=0$推导出 $\begin{pmatrix}
+		-1 & 1 \\
+		1 & -1\end{pmatrix}\begin{pmatrix}
+		x_1 \\
+		x_2 \end{pmatrix}=0$，得到上面的$A$点向量$\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix}$。</p>
+					<div>Python代码：</div>
+					<p class="p-code">
+						<code>#导入库<br>import numpy as np<br>#生成2阶矩阵<br>M=np.mat([[2,1],[1,2]])<br>#调用eig()函数求特征值和特征向量<br>
+eig_val,eig_vec=np.linalg.eig(M)<br>#显示特征值<br>print("M的特征值为：\n",eig_val)<br>#显示特征向量<br>print("M的特征向量：\n",eig_vec)
+</code>
+					</p>
+					<p>值得强调，在模式识别模型中，向量的方向比向量大小更重要，有时我们忽略向量大小，只关心方向。（0.70710678，-0.70710678）和（1，-1）可看成同一向量。</p>
+					</div>
+			</li>
+			<li>
+				<h5>特征值分解<span class="ktitle ml-5 badge badge-light badge-pill">show more</span></h5>				
+				<div class="kdetails">
+					<p>前面提到的矩阵$M=\begin{pmatrix}
+		2 & 1 \\
+		1 & 2\end{pmatrix}$，其特征向量$\begin{pmatrix}
+		1 \\
+		1 \end{pmatrix}$、$\begin{pmatrix}
+		-1 \\
+		1 \end{pmatrix}$，特征向量矩阵为$Q=\begin{pmatrix}
+		1 & -1 \\
+		1 & 1\end{pmatrix}$，其对应的逆矩阵$Q^{-1}=\dfrac{1}{2}\begin{pmatrix}
+		1 & 1 \\
+		-1 & 1\end{pmatrix}$。通过简单计算得到：$M=Q\Sigma Q^{-1}$。式中$\Sigma$为对角矩阵，对角元素是特征值（由大到小排列），$Q$为特征向量矩阵，上式称为为特征值分解公式。</p>
+		<p>特征值的大小表示其对应的特征向量的重要程度，特征值越大，代表包含的信息量越多；反之，其信息量越少。为此，可以实现矩阵的压缩，即在特征值分解后，保留比较大的特征值及其对应的特征向量。舍弃比较小的特征值与对应特征向量，以此达到压缩矩阵的目的。PCA降维处理就是基于此理论。</p>
+		<div>Python代码：</div>
+			<p class="p-code">
+				<code>import numpy as np<br>#定义矩阵<br>M=np.mat([[2,1],[1,2]])<br>#特征值、特征向量分解<br>eig_val,eig_vec=np.linalg.eig(M)<br>#特征值矩阵<br>sigma=np.diag(eig_val)<br>#计算<br>    
+N=eig_vec.dot(sigma.dot(np.linalg.inv(eig_vec)))<br>#检验M与 是否相同<br>print("M与分解矩阵积N是否一样： ",np.allclose(M,N))</code>
+			</p>
+				</div>									
+			</li>			
+		</ol>
+		<h3 class="mb-3 son_wrap" id="training">二、实训</h3>
+		<h6><b class="task">任务：</b>用矩阵计算实现低维向量空间向高维向量空间的变换；也可以实现高维向量空间向低维向量空间的变换。</h6>
+		<p>例如二维向量$\begin{pmatrix}
+		1 \\
+		-1 \end{pmatrix}$通过映射变换$A=\begin{pmatrix}
+		1 & 1 \\
+		1 & -1\\
+		-1 & 1\\
+		-1 & -1 \end{pmatrix}$后，
+		$$A\begin{pmatrix}
+		1 \\
+		-1 \end{pmatrix}=\begin{pmatrix}
+		1 & 1 \\
+		1 & -1\\
+		-1 & 1\\
+		-1 & -1 \end{pmatrix}\begin{pmatrix}
+		1 \\
+		-1 \end{pmatrix}=\begin{pmatrix}
+		0 \\
+		2 \\
+		-2\\
+		0\end{pmatrix}$$变换成四维空间中向量。<br>同时，四维空间向量$\begin{pmatrix}
+		0 \\
+		2 \\
+		-2\\
+		0\end{pmatrix}$经过映射变换$B=\begin{pmatrix}
+		1 & 1 & -1 & -1\\
+		1 & -1 & 1 & -1 \end{pmatrix}$后，$$B\begin{pmatrix}
+		0 \\
+		2 \\
+		-2\\
+		0\end{pmatrix}=\begin{pmatrix}
+		1 & 1 & -1 & -1\\
+		1 & -1 & 1 & -1 \end{pmatrix}\begin{pmatrix}
+		0 \\
+		2 \\
+		-2\\
+		0\end{pmatrix}=\begin{pmatrix}
+		4\\
+		-4\end{pmatrix}$$ 
+变换成二维向量。
+		</p>
+		<div><b>要求：</b>请用Python实现。</div>		
+		<p><kbd>Step1</kbd>&nbsp;&nbsp;导入库</p>
+		<p class="p-code">
+			<code>#导入numpy库<br/>import numpy as np</code>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		</p>
+		<p><kbd>Step2</kbd>&nbsp;&nbsp;低维（二）映射到高维（四）</p>
+		<p class="p-code">
+			<code>#定义4*2阶变换矩阵A<br>A=np.array([[1,1],[1,-1],[-1,1],[-1,-1]])<br>#定义二维向量v<br>v=np.array([1,-1]).T<br>#向量与矩阵相乘<br>v=np.dot(A,v)<br>#显示新的向量<br>print(v)</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		<div><b>结果：</b></div>	
+		<p>[ 0  2 -2  0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#四维向量</p>
+		</p>
+		<p><kbd>Step3</kbd>&nbsp;&nbsp;高维（四）映射到高维（二）</p>
+		<p class="p-code">
+			<code>##定义2*4阶变换矩阵B<br>B=np.array([[1,1,-1,-1],[1,-1,1,-1]])<br>#定义四维向量v<br>v=np.array([0,2,-2,0]).T<br>#向量与矩阵相乘<br>v=np.dot(B,v)<br>#显示新向量<br>print(v)</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+			<div><b>结果：</b></div>
+			<p>[ 4 -4]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#二维向量</p>
+		</p>		
+		<h3 id="extend" class="son_wrap">三、扩展</h3>
+		<p><b class="task">任务：</b>假设有一矩阵$M=\begin{bmatrix}
+		10.05 & 9.95\\
+		9.95 & 10.05 \end{bmatrix}$，其有两个特征值：$20，0.1$，我们在应用公式$M=Q\Sigma Q^{-1}$分解时，$\Sigma=\begin{bmatrix}
+		20 & 0\\
+		0 & 0.1 \end{bmatrix}$，为计算方便，我们忽略小的特征值0.01，改为0，即$\Sigma'=\begin{bmatrix}
+		20 & 0\\
+		0 & 0 \end{bmatrix}$。此时，用$M'=Q\Sigma' Q^{-1}$重构矩阵与原来矩阵$M$差别多少呢？&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-success" id='tips'>点击查看答案</button></p>		
+		<div class="answer">Python代码：
+			<p><kbd>Step1</kbd>&nbsp;&nbsp;导入库</p>
+			<p class="p-code">
+				<code>import numpy as np</code>
+			</p>
+			<p><kbd>Step2</kbd>&nbsp;&nbsp;生成矩阵M</p>
+			<p class="p-code">
+				<code>M=np.mat([[10.05,9.95],[9.95,10.05]])</code>
+			</p>
+			<p><kbd>Step3</kbd>&nbsp;&nbsp;特征值和特征向量分解</p>
+			<p class="p-code">
+				<code>eig_val,eig_vec=np.linalg.eig(M)</code>
+			</p>
+			<p><kbd>Step4</kbd>&nbsp;&nbsp;显示特征值</p>
+			<p class="p-code">
+				<code>print(eig_val)</code>
+			</p>
+			<div><b>结果：</b></div>
+			<p>[20, 0.1]</p>
+			<p><kbd>Step5</kbd>&nbsp;&nbsp;忽略值小的特征值0.1，生成$\Sigma'$对角阵</p>
+			<p class="p-code">
+				<code>sigma=np.mat([[20,0],[0,0]])</code>
+			</p>
+			<p><kbd>Step6</kbd>&nbsp;&nbsp;重构矩阵</p>
+			<p class="p-code">
+				<code>N=eig_vec.dot(sigma.dot(np.linalg.inv(eig_vec)))<br>print(N)
+</code>
+			</p>
+			<div><b>结果：</b></div>
+			<p>[[10. 10.]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10. 10.]]</p>
+			<p>可以看出，原矩阵和重构的矩阵元素值相差5%，保留了原来矩阵的主要信息，而计算量少了50%（乘法次数由12降为6）。</p>
+		</div>
+		<div class="program" draggable="true">
+			<div class="pro-text card bg-light">
+				<form>
+					<h3 class="card-title">程序调试<button type="button" class="close"><span>&times;</span></button></h3>
+					<textarea id='pro'></textarea><br/>
+					<div class="card-footer">
+						<input type="submit" value="运行程序" class="btn btn-info"/>
+						<input type="reset" name="" id="pro-clear" value="清空" class="btn btn-warning"/>
+					</div>					
+				</form>
+			</div>
+			<div id='pro-result'>
+				此处显示运行结果
+			</div>
+		</div>
+		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/link.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

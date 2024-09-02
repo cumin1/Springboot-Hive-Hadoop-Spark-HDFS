@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>矩阵与矩阵运算</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/link1.css"/>
+		<script id="MathJax-script" async src="../js/es5/tex-chtml.js"></script>
+		<script>
+		MathJax = {
+		  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+		};
+		</script>
+	</head>
+	<body class="container-fluid">		
+		<h2 class="my-5 hnav">矩阵与矩阵运算</h2>
+		<div id="right_nav">
+			<ul>
+				<li class="active">知识</li>
+				<li>实训</li>
+				<li>扩展</li>
+				<li class='last'>顶部</li>
+			</ul>
+		</div>
+		<h3 class="mb-3 son_wrap" id='knowledge'>一、知识</h3>
+		<p>矩阵是机器学习、人工智能用于数据表示的基本方法。图像、数据表都可用矩阵表示并计算。例如手写数字“8”的像素个数为$28\times 28$灰色图，黑色像素值以“0”表示，白色像素值依据像素的灰度值$1-255$之间的值表示，构成$28\times 28$维矩阵。</p>
+		<div class="row mb-3">
+			<div class="col text-center">
+				<img src="img/1-2-1.jpg" class="img-fluid">
+				<div>图1&nbsp;&nbsp;&nbsp;&nbsp;手写数字“8”像素灰度值矩阵</div>
+			</div>
+		</div>
+		<p>再比如，某公司有四个工厂（甲、乙、丙、丁），分布在不同地区，同时三种产品（产品1、产品2、产品3），产量（单位：t），统计结果如下：</p>		
+		<div class="text-center small font-weight-bold mb-2">表1&nbsp;&nbsp;&nbsp;&nbsp;四个工厂三种产品的产量</div>
+		<div class="row">
+			<table class="col table table-bordered table-sm table-striped mx-5">
+					<thead class="thead-dark">
+						<tr><th></th><th>产品1</th><th>产品2</th><th>产品3</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>工厂甲</td><td>5</td><td>2</td><td>4</td></tr>
+						<tr><td>工厂乙</td><td>3</td><td>8</td><td>2</td></tr>
+						<tr><td>工厂丙</td><td>6</td><td>0</td><td>4</td></tr>
+						<tr><td>工厂丁</td><td>0</td><td>1</td><td>6</td></tr>
+					</tbody>				
+			</table>
+		</div>		
+		<div>其中四行分别表示甲乙丙丁四个工厂的生产情况，三列分布表示三种产品1，2，3的产量。</div>
+		<div class="text-center small font-weight-bold mb-2">表2&nbsp;&nbsp;&nbsp;&nbsp;三种产品的利润和体积</div>
+		<div class="row">
+			<table class="col table table-bordered table-sm table-striped mx-5">
+					<thead class="thead-dark">
+						<tr><th></th><th>单件利润</th><th>单件体积</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>产品1</td><td>2</td><td>4</td></tr>
+						<tr><td>产品2</td><td>1</td><td>3</td></tr>
+						<tr><td>产品3</td><td>3</td><td>2</td></tr>
+					</tbody>				
+			</table>
+		</div>
+		<div>其中第一列表示三种产品的单件利润，第二列表示三种产品的单件体积。记
+		$$A=\begin{pmatrix}
+		5 & 2 & 4 \\
+		3 & 8 & 2 \\
+		6 & 0 & 4 \\
+		0 & 1 & 6 
+		\end{pmatrix},\quad
+		B=\begin{pmatrix}
+		2 & 4 \\
+		1 & 3 \\
+		3 & 2  
+		\end{pmatrix}
+		$$
+		</div>
+		<ol>
+			<li>
+				<h5>什么是矩阵<span class="ktitle ml-5 badge badge-light badge-pill">show more</span></h5>
+				<div class="kdetails">
+					<p class="mt-3">由$m \times n$个实数或复数$a_{ij}$排成的$m$行$n$列的数表称为$m$行$n$列的矩阵，简称$m \times n$矩阵，记作：
+					$$A=\begin{pmatrix}
+					a_{11} & a_{12} & \cdots & a_{1n} \\
+					a_{21} & a_{22} & \cdots & a_{2n} \\
+					a_{31} & a_{32} & \cdots & a_{3n} \\
+					\cdots & \cdots & \cdots & \cdots \\
+					a_{m1} & a_{m2} & \cdots & a_{mn} 
+					\end{pmatrix}$$
+					</p>
+					<p>
+						这$m \times n$个数称为矩阵$A$的元素，简称为元，数$a_{ij}$位于矩阵$A$的第$i$行第$j$列，称为矩阵$A$的$(i,j)$元，以数$a_{ij}$为$(i,j)$元的矩阵可记为$(a_{ij})_{m \times n}$，$m \times n$矩阵$A$也记作$A_{mn}$。
+					</p>
+					<p>元素$a_{ij}$是实数的矩阵称为实矩阵，元素$a_{ij}$是复数的矩阵称为复矩阵。而行数与列数都等于$n$的矩阵称为$n$阶矩阵或$n$阶方阵。</p>
+					<p>上例中A为$4 \times 3$矩阵，B为$3 \times 2$。</p>
+			</li>
+			<li>
+				<h5>典型矩阵<span class="ktitle ml-5 badge badge-light badge-pill">show more</span></h5>
+				<div class="kdetails">
+					<ul class="vector-cal">
+						<li>
+							<h5>对角矩阵</h5>
+							<div>对角矩阵是指除对角线元素外，其余元素均为0。
+							$$A=\begin{pmatrix}
+							a_{11} & 0 & \cdots & 0 \\
+							0 & a_{22} & \cdots & 0 \\
+							0 & 0 & \cdots & 0 \\
+							\cdots & \cdots & \cdots & \cdots \\
+							0 & 0 & \cdots & a_{mn} 
+							\end{pmatrix}$$
+							Python代码：np.diag(d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#对角阵，d为对角线元素的列表
+							</div><br/>
+						</li>
+						<li>
+							<h5>单位矩阵</h5>
+							<div>单位矩阵是指对角线元素全为1，其余元素皆为0的方阵。
+							$$E=\begin{pmatrix}
+							1 & 0 & \cdots & 0 \\
+							0 & 1 & \cdots & 0 \\
+							0 & 0 & \cdots & 0 \\
+							\cdots & \cdots & \cdots & \cdots \\
+							0 & 0 & \cdots & 1 
+							\end{pmatrix}$$
+							Python代码：np.eye(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 2阶单位矩阵&nbsp;&nbsp;&nbsp;&nbsp;或&nbsp;&nbsp;np.identity(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#3阶单位矩阵
+							</div><br/>
+						</li>
+						<li>
+							<h5>零矩阵</h5>
+							<div>零矩阵是指所有元素均为0的矩阵。Python代码：np.zeros((3,4))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#矩阵</div><br/>
+							</li>
+						<li>
+							<h5>对称矩阵</h5>
+							<div>对称矩阵是指矩阵元素满足$a_{ij}=a_{ji}$的方阵。
+							$$A=\begin{pmatrix}
+							a_{11} & a_{21} & \cdots & a_{n1} \\
+							a_{21} & a_{22} & \cdots & a_{n2} \\
+							a_{31} & a_{32} & \cdots & a_{n3} \\
+							\cdots & \cdots & \cdots & \cdots \\
+							a_{1n} & a_{2n} & \cdots & a_{nn} 
+							\end{pmatrix}$$
+							例如：$A=\begin{pmatrix}
+							1 & 2 & 3 \\
+							2 & 1 & 2 \\
+							3 & 2 & 1\end{pmatrix}$
+							</div>
+						</li>
+					</ul>									
+			</li>
+			<li>
+				<h5>矩阵计算<span class="ktitle ml-5 badge badge-light badge-pill">show more</span></h5>
+				<div class="kdetails">
+					<p>矩阵运算有加、差、数乘、转置，共轭和共轭转置、乘积、Hadamard乘积、判断矩阵是否相等等。</p>
+					<ul class="vector-cal">
+						<li>
+							<h5>矩阵加、差运算</h5>
+							<p>若两个矩阵$A$、$B$的行、列数相同，则和$A+B$、差$A-B$定义为相同位置的元素的和、差所产生的矩阵。$A\pm B=(a_{ij}\pm b_{ij})_{m \times n}$。</p>
+							<p>Python代码：A+B或np.add(A,B)；A-B或np.subtract(A,B)</p><br/>
+						</li>
+						<li>
+							<h5>矩阵相等判断运算</h5>
+							<p>若两个矩阵A、对应的元素相等，则称矩阵A和矩阵B相等。Python代码：A==B，或np.allclose(A，B)。</p><br/>
+						</li>
+						<li>
+							<h5>矩阵数乘运算</h5>
+							<p>矩阵数乘运算定义为常数乘以矩阵每个元素所得的矩阵。Python代码：a*A，A为矩阵，a为数值。</p><br>
+						</li>
+						<li>
+							<h5>矩阵的转置运算</h5>
+							<p>把矩阵$A$的行和列互相交换所产生的矩阵称为$A$的转置矩阵，记为$A^T$，这一过程称为矩阵的转置运算。例如：</p>
+							<p>$A=\begin{pmatrix}
+							1 & 4 & 2 \\
+							2 & 0 & 0\end{pmatrix},A$的转置矩阵
+							$A^T=\begin{pmatrix}
+							1 & 2 \\
+							4 & 0 \\
+							2 & 0\end{pmatrix}$
+							</p>
+							<p>Python代码：A.T</p>
+						</li>
+						<li>
+							<h5>矩阵相乘运算</h5>
+							<p>两个矩阵的乘法仅当第一个矩阵$A$的列数和另一个矩阵$B$的行数相等时才能进行。如$A$是$m\times n$矩阵和$B$是$n \times p$矩阵，它们的乘积$C$是一个$m \times p$矩阵，记为$C=AB$。矩阵$C$的第$i$行第$j$列元素$c_{ij}$是矩阵$A$的第$i$行行向量和矩阵$B$的第$j$列的列向量的内积。
+							<div class="text-center"><img src="img/1-2-2.png"></div>
+							例如，当$A=\begin{pmatrix}
+							1 & -1 \\
+							0 & 3 \\
+							2 & 1\end{pmatrix}，B=\begin{pmatrix}
+							3 & 1 & 2 \\
+							1 & 1 & 0\end{pmatrix}$时，
+							$$AB=\begin{pmatrix}
+							1 \times 3+(-1) \times 1 & 1 \times 1+(-1) \times 1 & 1 \times 2+(-1) \times 0 \\
+							0 \times 3+3 \times 1 & 0 \times 1+3 \times 1 & 0 \times 2+3 \times 0\\
+							2 \times 3+1 \times 1 & 2 \times 1+1 \times 1 & 2 \times 2+1 \times 0 \end{pmatrix}=\begin{pmatrix}
+							2 & 0 & 2 \\
+							3 & 3 & 0\\
+							7 & 3 & 4\end{pmatrix}$$
+							$$BA=\begin{pmatrix}
+							3 \times 1+1 \times 0+2 \times 2 & 3 \times (-1)+ 1 \times 3+2 \times 1 \\
+							1 \times 1+1 \times 0+0 \times 2 & 1 \times (-1)+ 1 \times 3+0 \times 1 \end{pmatrix}=\begin{pmatrix}
+							7 & 2 \\
+							1 & 2 \end{pmatrix}$$
+							Python代码：np.dot(A,B)  或np.matmul(A,B)。
+							</p>							
+						</li>
+						<li>
+							<h5>行列式运算</h5>
+						<p>一个$n \times n$方阵$A$的行列式记为$det(A)$或者$|A|$。一个$2 \times 2$矩阵$A=\begin{pmatrix}
+							a & b \\
+							d & c \end{pmatrix}$的行列式的计算公式为：$$det(A)=|A|=ac-bd$$
+							对于三阶行列式，行列式计算可用图2-4所示的计算方法：3条实线上3个元素积之和减去3条虚线上3个元素积之和。
+							<div class="text-center"><img src="img/1-2-3.png" ></div>
+							<div class="img-cap2">图2-4 三阶行列式计算示意图</div>
+							$$\begin{align}det(A)=|A|=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{21}a_{32}a_{13}\\
+							-a_{31}a_{22}a_{13}-a_{21}a_{12}a_{33}-a_{32}a_{23}a_{11}\end{align}$$
+							Python代码：np.linalg.det(A)
+							</p>
+						</li>
+						<li>
+							<h5>矩阵逆运算</h5>
+							<p>逆矩阵类似于数学中实数的倒数，例如，当$a \times b=b \times a=1$时，我们称$b$是$a$的倒数。</p>
+							<p>对于$n$阶方阵$A$，若存在$n$阶方阵$B$，使得：$AB=BA=E$（单位矩阵），则$A$、$B$互为逆矩阵。记作：$B=A^{-1}，A=B^{-1}$ 。若$A$可逆，则其逆矩阵唯一。</p>
+							<p>Python代码：A.I</p>
+						</li>
+						<li>
+							<h5>奇异矩阵</h5>
+							<p>行列式为0的矩阵没有逆矩阵，我们把这类矩阵称为奇异矩阵或不可逆矩阵。</p>
+						</li>
+					</ul>									
+			</li>
+		</ol>
+		<h3 class="mb-3 son_wrap" id="training">二、实训</h3>
+		<h6><b class="task">任务：</b>已知不同商店3种水果的价格、不同人员需要水果的数量以及不同城镇不同人员的数目如表3~表5所示。</h6>
+		<div class="text-center small font-weight-bold mb-2">表3&nbsp;&nbsp;&nbsp;&nbsp;不同商店3种水果的价格</div>
+		<div class="row">
+			<table class="col table table-bordered table-sm table-striped mx-5">
+					<thead class="thead-dark">
+						<tr><th>商店水果价格</th><th>商店A</th><th>商店B</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>苹果</td><td>8.5</td><td>9</td></tr>
+						<tr><td>橘子</td><td>4.5</td><td>4</td></tr>
+						<tr><td>梨</td><td>9</td><td>9.5</td></tr>
+					</tbody>				
+			</table>
+		</div>
+		<div class="text-center small font-weight-bold mb-2">表4&nbsp;&nbsp;&nbsp;&nbsp;不同人员需要水果的数量</div>
+		<div class="row">
+			<table class="col table table-bordered table-sm table-striped mx-5">
+					<thead class="thead-dark">
+						<tr><th>人员需要水果数量</th><th>苹果</th><th>橘子</th><th>梨</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>人员A</td><td>5</td><td>10</td><td>3</td></tr>
+						<tr><td>人员B</td><td>4</td><td>5</td><td>5</td></tr>
+					</tbody>				
+			</table>
+		</div>
+		<div class="text-center small font-weight-bold mb-2">表5&nbsp;&nbsp;&nbsp;&nbsp;不同城镇不同人员的数目</div>
+		<div class="row">
+			<table class="col table table-bordered table-sm table-striped mx-5">
+					<thead class="thead-dark">
+						<tr><th>城镇人员数目</th><th>人员A</th><th>人员B</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>城镇1</td><td>1000</td><td>500</td></tr>
+						<tr><td>城镇2</td><td>2000</td><td>1000</td></tr>
+					</tbody>				
+			</table>
+		</div>
+		<div><b>要求：</b></div>
+		<p>（1）计算在每个商店中每个人购买水果的费用<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）	计算在每个城镇中每种水果的购买量。
+		</p>
+		<div><b>分析：</b></div>
+		<p>我们用矩阵A、B、C分别表示3个表格，即
+			$$A=\begin{pmatrix}
+			8.5 & 9 \\
+			4.5 & 4 \\
+			9 & 9.5 \end{pmatrix},B=\begin{pmatrix}
+			5 & 10 & 3 \\
+			4 & 5 & 5 \end{pmatrix},C=\begin{pmatrix}
+			1000 & 500 \\
+			2000 & 1000 \end{pmatrix}$$
+			矩阵D描述每个商店中每个人购买水果的费用，矩阵E描述每个城镇中每种水果的购买量。显然，$D=BA,E=CB$。
+		</p>
+		<p><kbd>Step1</kbd>&nbsp;&nbsp;导入库</p>
+		<p class="p-code">
+			<code>#导入numpy库<br/>import numpy as np</code>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		</p>
+		<p><kbd>Step2</kbd>&nbsp;&nbsp;创新矩阵A、B、C</p>
+		<p class="p-code">
+			<code>#不同商店中3种水果价格<br/>A=np.mat([[8.5,9],[4.5,4],[9,9.5]])<br/>#不同人员需要水果的数量<br>B=np.mat([[5,10,3],[4,5,5]])<br>#不同城镇中不同人员的数目<br>C=np.mat([[1000,500],[2000,1000]])</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		</p>
+		<p><kbd>Step3</kbd>&nbsp;&nbsp;求每个商店中每个人购买水果的费用</p>
+		<p class="p-code">
+			<code>#矩阵相乘<br/>D=B.dot(A)</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>			
+		</p>
+		<p><kbd>Step4</kbd>&nbsp;&nbsp;求每个城镇中每种水果的购买量</p>
+		<p class="p-code">
+			<code>#矩阵相乘<br/>E=C.dot(B)</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		</p>
+		<p><kbd>Step5</kbd>&nbsp;&nbsp;显示结果</p>
+		<p class="p-code">
+			<code>print("每个商店中每个人购买水果的费用：\n",D)<br/>print("每个城镇中每种水果的购买量：\n",E)</code>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-primary copyBtn">复制</button>
+		</p>
+		<p><kbd>OUT：</kbd></p>
+		<p class="p-code">每个商店中每个人购买水果的费用：<br>[[114.5 113.5]<br>[101.5 103.5]]<br>每个城镇中每种水果的购买量：<br>[[ 7000 12500  5500]<br>[14000 25000 11000]]</p>
+		<h3 id="extend" class="son_wrap">三、扩展</h3>
+		<p><b class="task">任务：</b>请编写Python代码，实现图形缩放、旋转。假设有个正四边形顶点分别为：$A(0,0)、B(1,0)、C(1,1)、D(0,1)$。用矩阵相乘实现放大、缩小和旋转。</p>
+		<p>假设放大矩阵$M_1=\begin{pmatrix}
+			2 & 0 \\
+			0 & 2 \end{pmatrix}$，缩小矩阵$M_2=\begin{pmatrix}
+			0.5 & 0 \\
+			0 & 0.5 \end{pmatrix}$和旋转矩阵$M_3=\begin{pmatrix}
+			0.5 & 0.866 \\
+			-0.866 & 0.5 \end{pmatrix}$。&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-success" id='tips'>点击查看答案</button></p>
+		<div class="answer">Python代码：
+			<p><kbd>Step1</kbd>&nbsp;&nbsp;导入库</p>
+					<p class="p-code">
+						<code>import matplotlib.pyplot as plt<br>
+						import numpy as np<br>
+						import math</code>
+					</p>
+					<p><kbd>Step2</kbd>&nbsp;&nbsp;绘制正四边形</p>
+					<p class="p-code">
+						<code>#创建一个绘图对象<br>
+						fig,ax=plt.subplots()<br>
+						#定义正四边形顶点坐标<br>
+						x=[0,1,1,0,0]<br>
+						y=[0,0,1,1,0]<br>
+						#填充四边形<br># ax.plot(x,y)绘制四边形<br>
+						ax.fill(x,y,color='blue',linewidth=2,facecolor='yellow')<br>#显示绘图结果<br>
+						plt.show()</code>
+					</p>
+					<div><b>结果：</b></div>
+					<div class="text-center"><img src="img/1-2-4.jpg"></div>
+					<p><kbd>Step3</kbd>&nbsp;&nbsp;定义变换矩阵</p>
+					<p class="p-code">
+						<code>#定义放大矩阵M1、缩小矩阵M2和旋转矩阵M3<br>
+						M1=np.array([[2,0],[0,2]])<br>
+						M2=np.array([[0.5,0],[0,0.5]])<br>
+						M3=np.array([[0.5,math.sqrt(2)],[-math.sqrt(2),0.5]])</code>
+					</p>
+					<p><kbd>Step4</kbd>&nbsp;&nbsp;计算新顶点</p>
+					<p class="p-code">
+						<code>#以四边形顶点坐标定义4行2列矩阵，每行两个元素为一个顶点坐标<br>T=np.array([[0,0],[1,0],[1,1],[0,1]])<br>#矩阵T与M3相乘，即产生4个新顶点<br>T=np.dot(T,M3)
+</code>
+					</p>
+					<p><kbd>Step5</kbd>&nbsp;&nbsp;绘制新的正四边形</p>
+					<p class="p-code">
+						<code>#四边形新顶点横坐标、纵坐标生成列表，注意闭环<br>
+						x=[T[0][0],T[1][0],T[2][0],T[3][0],T[0][0]]<br>
+						y=[T[0][1],T[1][1],T[2][1],T[3][1],T[0][1]]<br>
+						#填充四边形，指定颜色和线宽<br>
+						ax.fill(x,y,color='blue',linewidth=2,facecolor='yellow')<br>
+						#显示绘图<br>
+						plt.show()</code>
+					</p>
+					<p><kbd>Step4</kbd>&nbsp;&nbsp;结果：</p>
+					<div class="text-center"><img src="img/1-2-5.jpg"></div>
+			<p>如果把上述的M3用M1和M2替换，分别得到图形的放大和缩小效果。</p>		
+		</div>
+		<div class="program" draggable="true">
+			<div class="pro-text card bg-light">
+				<form>
+					<h3 class="card-title">程序调试<button type="button" class="close"><span>&times;</span></button></h3>
+					<textarea id='pro'></textarea><br/>
+					<div class="card-footer">
+						<input type="submit" value="运行程序" class="btn btn-info"/>
+						<input type="reset" name="" id="pro-clear" value="清空" class="btn btn-warning"/>
+					</div>					
+				</form>
+			</div>
+			<div id='pro-result'>
+				此处显示运行结果
+			</div>
+		</div>
+		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/link.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
