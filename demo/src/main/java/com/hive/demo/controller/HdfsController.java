@@ -35,6 +35,9 @@ public class HdfsController {
     @Value("${hdfsPath.video}")
     String videoPath;
 
+    @Value("${hdfsPath.audio}")
+    String audioPath;
+
     @Resource
     HdfsService hdfsService;
 
@@ -84,6 +87,19 @@ public class HdfsController {
         此接口用于查找hdfs目录：/stiei/video/ 下所有的视频
          */
         List list = hdfsService.find_video_hdfs();
+
+        ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
+
+        ResponseEntity responseEntity = new ResponseEntity(response,HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @GetMapping(value = "/findAudio")
+    public ResponseEntity findAudio() throws IOException, URISyntaxException, InterruptedException {
+        /*
+        此接口用于查找hdfs目录：/stiei/aduio/ 下所有的音频
+         */
+        List list = hdfsService.find_audio_hdfs();
 
         ResultBean<List<String>> response = new ResultBean<>(200,"查询成功",list);
 
@@ -188,6 +204,29 @@ public class HdfsController {
         return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
+    @PostMapping("/uploadAudio")
+    public ResponseEntity uploadAudio(@RequestParam("file") MultipartFile file)
+            throws IOException, URISyntaxException, InterruptedException {
+        /*
+        该接口实现上传音频至hdfs中的功能
+         */
+        String filename = file.getOriginalFilename();
+        String file_tail = filename.substring(filename.length() - 3);
+        if (!(file_tail.equals("mp3"))) {
+            return ResponseEntity.ok(new ResultBean(409,"请上传mp3格式的视频",null));
+        }
+
+        // 检查imageList中是否已存在filename
+        List videoList = hdfsService.find_video_hdfs();
+        if (videoList.contains(filename)) {
+            return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
+        }
+
+        String filePath = audioPath + filename;
+        String message = hdfsService.upload_audio(filePath,file);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
+    }
+
     @GetMapping("/deleteImage/{image_name}")
     public ResponseEntity deleteImage(@PathVariable(value = "image_name") String image_name,HttpServletRequest request)
             throws URISyntaxException, IOException, InterruptedException {
@@ -231,6 +270,13 @@ public class HdfsController {
         return ResponseEntity.ok(new ResultBean(200,message,null));
     }
 
+    @GetMapping("/deleteAudio/{audio_name}")
+    public ResponseEntity deleteAudio(@PathVariable(value = "audio_name") String audio_name,HttpServletRequest request)
+            throws URISyntaxException, IOException, InterruptedException {
+        String message = hdfsService.delete_audio(audio_name);
+        return ResponseEntity.ok(new ResultBean(200,message,null));
+    }
+
     @Value("${hdfsPath.uri}")
     String BASE_DIR;
     @GetMapping("/getFile/{filename}")
@@ -254,6 +300,10 @@ public class HdfsController {
             }else if (fileName.contains("mp4") || fileName.contains("avi")) {
                 String path = BASE_DIR + "/stiei/video/" + fileName;
                 String message = hdfsService.load_video(path,response.getOutputStream());
+                return message;
+            }else if (fileName.contains("mp3") || fileName.contains("wav")) {
+                String path = BASE_DIR + "/stiei/audio/" + fileName;
+                String message = hdfsService.load_audio(path,response.getOutputStream());
                 return message;
             }else {
                 return "file not found";

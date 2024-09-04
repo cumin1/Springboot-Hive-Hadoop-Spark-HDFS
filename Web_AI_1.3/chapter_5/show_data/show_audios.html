@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频文件列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/show_data.css" />
+    <link rel="stylesheet" href="../css/link1.css">
+</head>
+<body>
+    <div class="button-group">
+        <button class="btn" onclick="goBack()">返回</button>
+    </div>
+    <div class="container">
+        <h2>音频文件列表</h2>
+        <ul id="file-list" class="file-list">
+            <!-- 这里将由 JavaScript 动态插入音频列表 -->
+        </ul>
+    </div>
+
+    <script>
+        const audioList = document.getElementById('file-list');
+
+        async function fetchAudioFiles() {
+            try {
+                const response = await fetch('http://localhost:8080/hdfs/file/findAudio');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                renderAudioList(data.data); // 渲染音频列表
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        }
+
+        function renderAudioList(audios) {
+            audioList.innerHTML = ''; // 清空现有列表
+
+            audios.forEach(filename => {
+                const li = document.createElement('li');
+                li.className = 'audio-item';
+
+                const h3 = document.createElement('h3');
+                h3.textContent = filename;
+
+                const audio = document.createElement('audio');
+                audio.controls = true;
+                audio.src = `http://localhost:8080/hdfs/file/getFile/${filename}`;
+
+                // const downloadBtn = document.createElement('a');
+                // downloadBtn.href = audio.src;
+                // downloadBtn.download = filename;
+                // downloadBtn.textContent = '下载';
+                // downloadBtn.className = 'download-btn';
+
+                li.appendChild(audio);
+                li.appendChild(h3);
+                // li.appendChild(downloadBtn);
+                audioList.appendChild(li);
+            });
+        }
+
+        // 获取并渲染音频文件列表
+        fetchAudioFiles();
+    </script>
+
+</body>
+</html>

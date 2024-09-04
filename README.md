@@ -92,6 +92,25 @@ uri: http://localhost:8080/hdfs/file/findVideo
 }
 ```
 
+# 查看所有音频
+方法：GET
+
+uri: http://localhost:8080/hdfs/file/findAudio
+
+请求参数：无
+
+返回结果结构(成功):
+```
+{
+    "statusCode": 200,
+    "message": "查询成功",
+    "data": [
+        "测试1.mp3",
+        "测试2.mp3"
+    ]
+}
+```
+
 # 上传图片到平台
 方法：POST
 
@@ -180,6 +199,28 @@ Content-Type=multipart/form-data
 upload video success
 ```
 
+# 上传音频到平台
+方法： POST
+
+uri: http://localhost:8080/hdfs/file/uploadAudio
+
+请求头设置：
+```
+Content-Type=multipart/form-data
+```
+
+请求体设置：
+```
+参数名： file
+参数值：xxx.mp3
+参数类型：file
+```
+
+返回成功信息:
+```
+upload audio success
+```
+
 # 删除平台中的图片
 方法：GET
 
@@ -234,6 +275,23 @@ uri: http://localhost:8080/hdfs/file/deleteVideo{video_name}
 ```
 http://localhost:8080/hdfs/file/deleteVideo/xxx.mp4
 ```
+
+# 删除平台的音频
+方法： GET
+
+uri: http://localhost:8080/hdfs/file/deleteAudio{audio_name}
+
+请求示例：
+```
+http://localhost:8080/hdfs/file/deleteAudio/xxx.mp3
+```
+
+
+# 下载平台文件
+方法：GET
+
+uri: http://localhost:8080/hdfs/file/getFile/{filename}
+
 
 
 

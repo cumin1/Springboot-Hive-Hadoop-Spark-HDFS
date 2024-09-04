@@ -41,3 +41,4 @@ hdfsPath:
     csv: hdfs://192.168.114.128:8020/stiei/text/csv/
     txt: hdfs://192.168.114.128:8020/stiei/text/txt/
     video: hdfs://192.168.114.128:8020/stiei/video/
+    audio: hdfs://192.168.114.128:8020/stiei/audio/

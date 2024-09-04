@@ -122,6 +122,23 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
+    public List find_audio_hdfs() throws IOException, URISyntaxException, InterruptedException {
+        Configuration configuration = new Configuration();
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI), configuration,"root");
+        Path path = new Path("/stiei/audio");
+        RemoteIterator<LocatedFileStatus> files = fs.listFiles(path, true);
+
+        List<String> list = new ArrayList<>();
+        while (files.hasNext()) {
+            FileStatus fileStatus = files.next();
+            String fileName = fileStatus.getPath().getName();
+            list.add(fileName);
+        }
+
+        return list;
+    }
+
+    @Override
     public String upload_image(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
         // 传过来一个路劲 和 图片文件
         Configuration configuration = new Configuration();
@@ -179,17 +196,29 @@ public class HdfsServiceImpl implements HdfsService {
          */
         Configuration configuration = new Configuration();
         FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
-
         byte[] fileContext = file.getBytes();
-
         Path path = new Path(hdfsPath);
-
         FSDataOutputStream fos = fs.create(path);
         fos.write(fileContext);
         fos.close();
 
         return "upload video success";
+    }
 
+    @Override
+    public String upload_audio(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException {
+        /*
+         * 传过来一个路径 和 音频文件
+         */
+        Configuration configuration = new Configuration();
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+        byte[] fileContext = file.getBytes();
+        Path path = new Path(hdfsPath);
+        FSDataOutputStream fos = fs.create(path);
+        fos.write(fileContext);
+        fos.close();
+
+        return "upload audio success";
     }
 
     @Override
@@ -259,6 +288,22 @@ public class HdfsServiceImpl implements HdfsService {
     }
 
     @Override
+    public String delete_audio(String audio_name) throws URISyntaxException, IOException, InterruptedException {
+        Configuration configuration = new Configuration();
+        FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+        Path videoPath = new Path(HDFS_URI + "/stiei/audio/" + audio_name);
+        boolean isDelete = fs.delete(videoPath, true);
+        fs.close();
+        if (!isDelete) {
+            // 如果isDeleted为false，则文件或目录不存在
+            return "没有该文件，请重新输入";
+        }  else {
+            // 文件已成功删除
+            return "文件已成功删除";
+        }
+    }
+
+    @Override
     public String load_image(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException
     {
         try {
@@ -273,7 +318,6 @@ public class HdfsServiceImpl implements HdfsService {
         }catch (Exception e){
             return "文件下载错误";
         }
-
 
     }
 
@@ -325,5 +369,19 @@ public class HdfsServiceImpl implements HdfsService {
         }
     }
 
-
+    @Override
+    public String load_audio(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException {
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem fs = FileSystem.get(new URI(HDFS_URI),configuration,"root");
+            Path audioPath = new Path(path);
+            FSDataInputStream fsInput = fs.open(audioPath);
+            IOUtils.copyBytes(fsInput, outputStream, 4096, false);
+            fsInput.close();
+            outputStream.flush();
+            return "文件下载成功";
+        }catch (Exception e){
+            return "文件下载错误";
+        }
+    }
 }

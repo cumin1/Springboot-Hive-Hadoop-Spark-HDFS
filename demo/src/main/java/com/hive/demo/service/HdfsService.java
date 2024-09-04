@@ -19,6 +19,8 @@ public interface HdfsService {
 
     List find_video_hdfs() throws IOException, URISyntaxException, InterruptedException;
 
+    List find_audio_hdfs() throws IOException, URISyntaxException, InterruptedException;
+
     String upload_image(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException;
 
     String upload_csv(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException;
@@ -26,6 +28,8 @@ public interface HdfsService {
     String upload_txt(String hdfsPath, MultipartFile file) throws URISyntaxException, IOException, InterruptedException;
 
     String upload_video(String hdfsPath,MultipartFile file) throws URISyntaxException, IOException, InterruptedException;
+
+    String upload_audio(String hdfsPath,MultipartFile file) throws URISyntaxException, IOException, InterruptedException;
 
     String delete_image(String image_name) throws URISyntaxException, IOException, InterruptedException;
 
@@ -35,6 +39,8 @@ public interface HdfsService {
 
     String delete_video(String video_name) throws URISyntaxException, IOException, InterruptedException;
 
+    String delete_audio(String audio_name) throws URISyntaxException, IOException, InterruptedException;
+
     String load_image(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
 
     String load_csv(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
@@ -42,5 +48,7 @@ public interface HdfsService {
     String load_txt(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
 
     String load_video(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
+
+    String load_audio(String path, ServletOutputStream outputStream) throws URISyntaxException, IOException, InterruptedException;
 
 }

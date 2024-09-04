@@ -63,3 +63,8 @@ function renderVideoList(videos) {
 
 // 获取并渲染视频列表
 fetchVideos();
+
+
+function goBack() {
+    window.history.back();
+}
