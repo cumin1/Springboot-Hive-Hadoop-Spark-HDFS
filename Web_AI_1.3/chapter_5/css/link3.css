@@ -23,7 +23,28 @@ body {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    /* justify-content: center;  */
 }
+
+.button-group .btn {
+    background-color: transparent; /* 透明背景 */
+    color: #262a2d; /* 苹果风格的蓝色字体 */
+    padding: 10px 20px; /* 按钮的内边距 */
+    border-radius: 8px; /* 圆角效果 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    font-size: 16px; /* 字体大小 */
+    text-align: center; /* 文字居中 */
+    text-decoration: none; /* 去掉文本下划线 */
+    transition: background-color 0.3s ease, color 0.3s ease; /* 背景色和字体颜色过渡效果 */
+    border: none; /* 移除边框 */
+}
+
+.button-group .btn:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* 鼠标悬停时轻微改变背景颜色 */
+    color: #354351; /* 鼠标悬停时字体颜色变深 */
+}
+
+
 
 .file-actions {
     display: flex;
