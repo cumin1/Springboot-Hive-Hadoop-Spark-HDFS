@@ -152,7 +152,7 @@ public class HdfsServiceImpl implements HdfsService {
         fos.write(fileContext);
         fos.close();
 
-        return "upload image success";
+        return "图片文件上传成功";
     }
 
     @Override
@@ -169,7 +169,7 @@ public class HdfsServiceImpl implements HdfsService {
         fos.write(fileContext);
         fos.close();
 
-        return "upload csv success";
+        return "csv文件上传成功";
     }
 
     @Override
@@ -186,7 +186,7 @@ public class HdfsServiceImpl implements HdfsService {
         fos.write(fileContext);
         fos.close();
 
-        return "upload txt success";
+        return "txt文件上传成功";
     }
 
     @Override
@@ -202,7 +202,7 @@ public class HdfsServiceImpl implements HdfsService {
         fos.write(fileContext);
         fos.close();
 
-        return "upload video success";
+        return "视频文件上传成功";
     }
 
     @Override
@@ -218,7 +218,7 @@ public class HdfsServiceImpl implements HdfsService {
         fos.write(fileContext);
         fos.close();
 
-        return "upload audio success";
+        return "音频文件上传成功";
     }
 
     @Override
@@ -318,7 +318,6 @@ public class HdfsServiceImpl implements HdfsService {
         }catch (Exception e){
             return "文件下载错误";
         }
-
     }
 
     @Override

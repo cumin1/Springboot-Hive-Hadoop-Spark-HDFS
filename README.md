@@ -286,12 +286,27 @@ uri: http://localhost:8080/hdfs/file/deleteAudio{audio_name}
 http://localhost:8080/hdfs/file/deleteAudio/xxx.mp3
 ```
 
-
 # 下载平台文件
 方法：GET
 
 uri: http://localhost:8080/hdfs/file/getFile/{filename}
 
+
+# 执行python文件
+方法：post
+
+uri: http://localhost:8080/python/execute
+
+请求参数（json格式）：
+```
+{
+    "code":"import numpy as np\na = np.array([1,2,3,4])\nprint(a)"
+}
+```
+返回信息：
+```
+[1 2 3 4]
+```
 
 
 

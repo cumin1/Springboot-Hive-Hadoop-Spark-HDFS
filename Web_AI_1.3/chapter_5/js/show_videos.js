@@ -1,4 +1,5 @@
 const videoList = document.getElementById('video-list');
+files = []
 
 async function fetchVideos() {
     try {
@@ -8,6 +9,8 @@ async function fetchVideos() {
         }
 
         const data = await response.json();
+        files.length = 0;
+        files.push(...data.data);
         renderVideoList(data.data); // 调用渲染视频列表函数
     } catch (error) {
         console.error('There was a problem with your fetch operation:', error);
@@ -68,3 +71,13 @@ fetchVideos();
 function goBack() {
     window.history.back();
 }
+
+function searchFiles(query) {
+    const filteredFiles = files.filter(file => file.toLowerCase().includes(query.toLowerCase()));
+    renderVideoList(filteredFiles);
+}
+
+// 监听搜索框的输入事件
+document.getElementById('search-input').addEventListener('input', (event) => {
+    searchFiles(event.target.value);
+});

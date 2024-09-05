@@ -56,7 +56,7 @@ function uploadFile(event, uploadpoint) {
             return response.json(); // 假设服务器返回 JSON 格式的数据
         })
         .then(data => {
-            console.log('Upload successful:', data);
+            console.log(data);
             alert(data.message);
             fetchImages(); // 上传成功后，更新文件列表
         })
@@ -102,3 +102,13 @@ async function handleDelete(video) {
 function goBack() {
     window.history.back();
 }
+
+function searchFiles(query) {
+    const filteredFiles = videos.filter(file => file.toLowerCase().includes(query.toLowerCase()));
+    renderFileList(filteredFiles);
+}
+
+// 监听搜索框的输入事件
+document.getElementById('search-input').addEventListener('input', (event) => {
+    searchFiles(event.target.value);
+});

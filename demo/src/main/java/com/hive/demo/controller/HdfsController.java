@@ -217,7 +217,7 @@ public class HdfsController {
         }
 
         // 检查imageList中是否已存在filename
-        List videoList = hdfsService.find_video_hdfs();
+        List videoList = hdfsService.find_audio_hdfs();
         if (videoList.contains(filename)) {
             return ResponseEntity.ok(new ResultBean(409,"文件已存在",null));
         }

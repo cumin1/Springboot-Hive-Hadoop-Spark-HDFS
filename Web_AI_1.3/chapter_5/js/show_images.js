@@ -55,3 +55,13 @@ fetchImages();
 function goBack() {
     window.history.back();
 }
+
+function searchFiles(query) {
+    const filteredFiles = images.filter(file => file.toLowerCase().includes(query.toLowerCase()));
+    renderImages(filteredFiles);
+}
+
+// 监听搜索框的输入事件
+document.getElementById('search-input').addEventListener('input', (event) => {
+    searchFiles(event.target.value);
+});

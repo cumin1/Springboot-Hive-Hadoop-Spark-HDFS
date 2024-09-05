@@ -9,15 +9,21 @@
 </head>
 
 <body>
+    <div class="container">
+        <div class="button-group">
+            <button class="btn" onclick="goBack()">返回</button>
+        </div>
+        <h2>所有图片</h2>
 
-    <div class="button-group">
-        <button class="btn" onclick="goBack()">返回</button>
-    </div>
-    <h2>所有图片</h2>
-    <div class="image-gallery">
-        <!-- 这里将由 JavaScript 动态插入图片 -->
-    </div>
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="搜索文件名...">
+        </div>
 
+        <div class="image-gallery">
+            <!-- 这里将由 JavaScript 动态插入图片 -->
+        </div>
+    </div>
 
     <script src="../js/show_images.js" type="text/javascript" charset="utf-8"></script>
 </body>

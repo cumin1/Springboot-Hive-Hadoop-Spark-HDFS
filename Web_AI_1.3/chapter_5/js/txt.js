@@ -103,3 +103,13 @@ async function handleDelete(txt) {
 function goBack() {
     window.history.back();
 }
+
+function searchFiles(query) {
+    const filteredFiles = txts.filter(file => file.toLowerCase().includes(query.toLowerCase()));
+    renderFileList(filteredFiles);
+}
+
+// 监听搜索框的输入事件
+document.getElementById('search-input').addEventListener('input', (event) => {
+    searchFiles(event.target.value);
+});

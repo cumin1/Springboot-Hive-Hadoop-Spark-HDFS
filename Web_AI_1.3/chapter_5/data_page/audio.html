@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音频文件管理</title>
     <link rel="stylesheet" href="../css/link2.css">
 </head>
+
 <body>
-    <div class="button-group">
-        <button class="btn" onclick="goBack()">返回</button>
-    </div>
+
     <div class="container">
-        <h2>音频文件管理</h2>
-        <div class="upload-container">
-            <label for="file-input" class="file-label">Choose file</label>
-            <input type="file" id="file-input" onchange="uploadAudio()"
-                accept=".mp3" style="display: none;">
+        <div class="button-group">
+            <button class="btn" onclick="goBack()">返回</button>
+        </div>
+        <div class="header-container">
+            <h2>点击按钮可上传音频</h2>
+            <div class="upload-container">
+                <label for="file-input" class="file-label">Choose file</label>
+                <input type="file" id="file-input" onchange="uploadAudio()" accept=".mp3" style="display: none;">
+            </div>
+        </div>
+
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="搜索文件名...">
         </div>
 
         <ul id="file-list" class="file-list">
@@ -23,115 +32,8 @@
         </ul>
     </div>
 
-    <script>
-        const audioList = document.getElementById('file-list');
-
-        async function fetchAudioFiles() {
-            try {
-                const response = await fetch('http://localhost:8080/hdfs/file/findAudio');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                renderAudioList(data.data); // 渲染音频列表
-            } catch (error) {
-                console.error('There was a problem with your fetch operation:', error);
-            }
-        }
-
-        function renderAudioList(audios) {
-            audioList.innerHTML = ''; // 清空现有列表
-
-            audios.forEach(filename => {
-                const li = document.createElement('li');
-                li.className = 'audio-item';
-
-                const h3 = document.createElement('h3');
-                h3.textContent = filename;
-
-                const audio = document.createElement('audio');
-                audio.controls = true;
-                audio.src = `http://localhost:8080/hdfs/file/getFile/${filename}`;
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = '删除';
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = () => deleteAudio(filename);
-
-                li.appendChild(audio);
-                li.appendChild(h3);
-                li.appendChild(deleteBtn);
-                audioList.appendChild(li);
-            });
-        }
-
-        async function uploadAudio() {
-            const fileInput = document.getElementById('file-input');
-            const file = fileInput.files[0];
-
-            if (!file) {
-                alert('请选择一个音频文件');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                const response = await fetch('http://localhost:8080/hdfs/file/uploadAudio', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                alert('上传成功!');
-                fetchAudioFiles(); // 更新音频列表
-
-            } catch (error) {
-                console.error('There was a problem with your upload:', error);
-                alert('上传失败!');
-            }
-
-            fileInput.value = ''; // 清空文件输入框
-        }
-
-        async function deleteAudio(filename) {
-            const confirmDelete = confirm(`确定要删除 ${filename} 吗？`);
-
-            if (!confirmDelete) {
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:8080/hdfs/file/deleteAudio/${filename}`, {
-                    method: 'GET',
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                alert('删除成功!');
-                fetchAudioFiles(); // 更新音频列表
-
-            } catch (error) {
-                console.error('There was a problem with your delete operation:', error);
-                alert('删除失败!');
-            }
-        }
-
-        // 获取并渲染音频文件列表
-        fetchAudioFiles();
-
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+    <script src="../js/audio.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
+
 </html>

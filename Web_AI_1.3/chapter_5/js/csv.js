@@ -103,3 +103,13 @@ async function handleDelete(csv) {
 function goBack() {
     window.history.back();
 }
+
+function searchFiles(query) {
+    const filteredFiles = csvs.filter(file => file.toLowerCase().includes(query.toLowerCase()));
+    renderFileList(filteredFiles);
+}
+
+// 监听搜索框的输入事件
+document.getElementById('search-input').addEventListener('input', (event) => {
+    searchFiles(event.target.value);
+});
