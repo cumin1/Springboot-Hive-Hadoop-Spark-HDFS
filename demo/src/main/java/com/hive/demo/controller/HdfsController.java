@@ -212,7 +212,7 @@ public class HdfsController {
          */
         String filename = file.getOriginalFilename();
         String file_tail = filename.substring(filename.length() - 3);
-        if (!(file_tail.equals("mp3"))) {
+        if (!(file_tail.equals("mp3")) && !(file_tail.equals("wav"))) {
             return ResponseEntity.ok(new ResultBean(409,"请上传mp3格式的视频",null));
         }
 

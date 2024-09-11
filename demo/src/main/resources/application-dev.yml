@@ -26,8 +26,8 @@ spring:
     mvc:
     servlet:
         multipart:
-            max-file-size: 50MB  		# 设置单个文件最大大小为10MB
-            max-request-size: 50MB  	# 设置多个文件大小为100MB
+            max-file-size: 1000MB  		# 设置单个文件最大大小为10MB
+            max-request-size: 1000MB  	# 设置多个文件大小为100MB
 
 server:
     tomcat:
