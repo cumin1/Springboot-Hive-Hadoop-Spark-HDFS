@@ -22,9 +22,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.18</version>
-
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,127 +30,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
-
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.data</groupId>-->
-        <!--			<artifactId>spring-data-hadoop</artifactId>-->
-        <!--			<version>2.5.0.RELEASE</version>-->
-        <!--			<exclusions>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>guava</artifactId>-->
-        <!--					<groupId>com.google.guava</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>hadoop-annotations</artifactId>-->
-        <!--					<groupId>org.apache.hadoop</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>hadoop-mapreduce-client-core</artifactId>-->
-        <!--					<groupId>org.apache.hadoop</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>hadoop-yarn-common</artifactId>-->
-        <!--					<groupId>org.apache.hadoop</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>hadoop-mapreduce-client-jobclient</artifactId>-->
-        <!--					<groupId>org.apache.hadoop</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>hadoop-common</artifactId>-->
-        <!--					<groupId>org.apache.hadoop</groupId>-->
-        <!--				</exclusion>-->
-        <!--			</exclusions>-->
-        <!--		</dependency>-->
-
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-jdbc</artifactId>
-            <version>3.1.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.jetty.aggregate</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>avro</artifactId>
-                    <groupId>org.apache.avro</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-runner</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hadoop</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-exec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hive-llap-client</artifactId>
-                    <groupId>org.apache.hive</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>curator-client</artifactId>
-                    <groupId>org.apache.curator</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hive-storage-api</artifactId>
-                    <groupId>org.apache.hive</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hive-metastore</artifactId>
-                    <groupId>org.apache.hive</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hive-common</artifactId>
-                    <groupId>org.apache.hive</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.thrift</groupId>
-                    <artifactId>libthrift</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.zookeeper</groupId>
-                    <artifactId>zookeeper</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-upgrade-acid</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-serde</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-shims</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -160,115 +39,10 @@
             <artifactId>tomcat-jdbc</artifactId>
         </dependency>
 
-
-        <!--		<dependency>-->
-        <!--			<groupId>org.apache.maven.plugins</groupId>-->
-        <!--			<artifactId>maven-resources-plugin</artifactId>-->
-        <!--			<version>3.2.0</version>-->
-        <!--			<exclusions>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>guava</artifactId>-->
-        <!--					<groupId>com.google.guava</groupId>-->
-        <!--				</exclusion>-->
-        <!--				<exclusion>-->
-        <!--					<artifactId>commons-io</artifactId>-->
-        <!--					<groupId>commons-io</groupId>-->
-        <!--				</exclusion>-->
-        <!--			</exclusions>-->
-        <!--		</dependency>-->
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.12</artifactId>
-            <version>3.1.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hadoop-client</artifactId>
-                    <groupId>org.apache.hadoop</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-net</artifactId>
-                    <groupId>commons-net</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-exec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.12</artifactId>
-            <version>3.1.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.hive</groupId>
-                    <artifactId>hive-exec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_2.12</artifactId>
-            <version>3.1.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-1.2-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-exec</artifactId>
-            <version>3.1.2</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>curator-client</artifactId>
-                    <groupId>org.apache.curator</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hadoop-yarn-registry</artifactId>
-                    <groupId>org.apache.hadoop</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hive-common</artifactId>
-                    <groupId>org.apache.hive</groupId>
-                </exclusion>
-				<exclusion>
-					<artifactId>jdk.tools</artifactId>
-					<groupId>jdk.tools</groupId>
-				</exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
             <version>3.0.8</version>
-        </dependency>
-
-
-        <!-- 因为我们需要使用Scala代码，所以我们还需要加入scala-library依赖 -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.12.18</version>
         </dependency>
 
         <!--配置hadoop相关依赖-->
@@ -304,12 +78,6 @@
             </exclusions>
         </dependency>
 
-        <!--		<dependency>-->
-        <!--			<groupId>org.apache.commons</groupId>-->
-        <!--			<artifactId>commons-lang3</artifactId>-->
-        <!--			<version>3.4</version>-->
-        <!--		</dependency>-->
-
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
@@ -334,7 +102,12 @@
             </exclusions>
         </dependency>
 
-
+        <!-- JFreeChart library for plotting -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.3</version>
+        </dependency>
     </dependencies>
 
     <!--	<build>-->
