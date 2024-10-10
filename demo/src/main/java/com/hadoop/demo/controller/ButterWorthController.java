@@ -155,4 +155,40 @@ public class ButterWorthController {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
+
+    // 图像处理
+    @GetMapping("/generate-image-pic")
+    public void generate_processpic(@RequestParam int cutoff, @RequestParam int order, HttpServletResponse response) throws IOException {
+        System.out.println("cutoff: " + cutoff);
+        System.out.println("order: " + order);
+
+        // 调用 Python 脚本
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "./python_script/ButterWorthPicHandle.py",
+                String.valueOf(cutoff), String.valueOf(order));
+        processBuilder.inheritIO();
+        Process process = processBuilder.start();
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // 读取生成的图像
+        File imageFile = new File("./tmp_img/pichandle_" + cutoff + "_" + order + ".png");
+        if (imageFile.exists()) {
+            response.setContentType("image/png");
+            response.setHeader("Content-Disposition", "inline; filename=\"" + imageFile.getName() + "\"");
+
+            try (InputStream inputStream = new FileInputStream(imageFile);
+                 OutputStream outputStream = response.getOutputStream()) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
 }
